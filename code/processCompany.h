@@ -13,10 +13,10 @@ class Time
     
     public:
         Time(
-            short input_hour = 0,
-            short input_day = 0,
-            short input_month = 0,
-            short input_year = 0
+            short input_hour,
+            short input_day,
+            short input_month,
+            short input_year
         );
 
         void set_hour(short input_hour);
@@ -43,16 +43,16 @@ class Vehicle
 
     public:
         Vehicle(
-            string input_id = "NA",
-            string input_brand = "NA",
-            string input_model = "NA",
-            string input_color = "NA", 
-            short input_n_seats = 0,
-            short input_manufacture_hour = 0,
-            short input_manufacture_day = 0, 
-            short input_manufacture_month = 0,
-            short input_manufacture_year = 0,  
-            bool input_status = false
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_hour,
+            short input_manufacture_day, 
+            short input_manufacture_month,
+            short input_manufacture_year,  
+            bool input_status
             );
         ~Vehicle();
 
@@ -80,17 +80,17 @@ class Sport : public Vehicle {
     public:
         public:
          Sport(
-            string input_id = "NA",
-            string input_brand = "NA",
-            string input_model = "NA",
-            string input_color = "NA", 
-            short input_n_seats = 0,
-            short input_manufacture_hour = 0,
-            short input_manufacture_day = 0, 
-            short input_manufacture_month = 0,
-            short input_manufacture_year = 0,  
-            bool input_status = false,
-            short input_exhaust_pipe_type = 0
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_hour,
+            short input_manufacture_day, 
+            short input_manufacture_month,
+            short input_manufacture_year,  
+            bool input_status,
+            short input_exhaust_pipe_type
             );
         ~Sport();
 
@@ -103,17 +103,17 @@ class Motorcycle : public Vehicle {
         bool is_helmet_included;
     public:
         Motorcycle(
-            string input_id = "NA",
-            string input_brand = "NA",
-            string input_model = "NA",
-            string input_color = "NA", 
-            short input_n_seats = 0,
-            short input_manufacture_hour = 0,
-            short input_manufacture_day = 0, 
-            short input_manufacture_month = 0,
-            short input_manufacture_year = 0,  
-            bool input_status = false,
-            bool input_is_helmet_included = false
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_hour,
+            short input_manufacture_day, 
+            short input_manufacture_month,
+            short input_manufacture_year,  
+            bool input_status,
+            bool input_is_helmet_included
             );
         ~Motorcycle();
 
@@ -127,17 +127,17 @@ class SUV : public Vehicle {
     
     public:
         SUV(
-            string input_id = "NA",
-            string input_brand = "NA",
-            string input_model = "NA",
-            string input_color = "NA", 
-            short input_n_seats = 0,
-            short input_manufacture_hour = 0,
-            short input_manufacture_day = 0, 
-            short input_manufacture_month = 0,
-            short input_manufacture_year = 0,  
-            bool input_status = false,
-            bool input_is_bag_included = false
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_hour,
+            short input_manufacture_day, 
+            short input_manufacture_month,
+            short input_manufacture_year,  
+            bool input_status,
+            bool input_is_bag_included
             );
         ~SUV();
 
@@ -160,39 +160,43 @@ class CarFleet
 class Customer
 {
     private:
+        string id;
         string name;
         bool gender;
         Time dob;
         string email;
-        string driver_license;
+        string driver_license_id;
         string phone_number;
     
     public:
         Customer(
-            string input_name = "NA",
-            bool input_gender = false,
-            short hour = 0,
-            short day = 0,
-            short month = 0,
-            short year = 0,
-            string input_email = "NA",
-            string input_driver_license = "NA",
-            string input_phone_number = "NA"
+            string input_id,
+            string input_name,
+            bool input_gender,
+            short hour,
+            short day,
+            short month,
+            short year,
+            string input_email,
+            string input_driver_license_id,
+            string input_phone_number
         );
         ~Customer();
 
+        void set_id(const string input_id);
         void set_name(const string input_name);
         void set_gender(const bool input_gender);
         void set_dob(const Time input_dob);
         void set_email(const string input_email);
-        void set_driver_license(const string input_driver_license);
-        void set_phone_number(const string phone_number);
+        void set_driver_license_id(const string input_driver_license_id);
+        void set_phone_number(const string input_phone_number);
 
+        string get_id();
         string get_name();
         bool get_gender();
         Time get_dob();
         string get_email();
-        string get_driver_license();
+        string get_driver_license_id();
         string get_phone_number();
 };
 
@@ -201,7 +205,9 @@ class RentalContract
     private:
         string id;
         short status;
+        string customer_id;
         string customer_name;
+        string vehicle_id;
         string vehicle_model;
         Time pickup_time;
         Time return_time;
@@ -209,54 +215,52 @@ class RentalContract
     
     public:
         RentalContract(
-            string input_id = "NA",
-            short input_status = 0,
-            string input_customer_name = "NA",
-            string input_vehicle_model = "NA",
-            short input_pickup_hour = 0,
-            short input_pickup_day = 0,
-            short input_pickup_month = 0,
-            short input_pickup_year = 0,
-            short input_return_hour = 0,
-            short input_return_day = 0,
-            short input_return_month = 0,
-            short input_return_year = 0,
-            short input_payment_method = 0
+            string input_id,
+            short input_status,
+            string input_customer_id,
+            string input_customer_name,
+            string input_vehicle_id,
+            string input_vehicle_model,
+            short input_pickup_hour,
+            short input_pickup_day,
+            short input_pickup_month,
+            short input_pickup_year,
+            short input_return_hour,
+            short input_return_day,
+            short input_return_month,
+            short input_return_year,
+            short input_payment_method
         );
 
         ~RentalContract();
 
         void set_id(const string input_id);
         void set_status(const short input_status);
-        void set_customer_name(const string input_customer_name);
-        void set_vehicle_model(const string input_vehicle_model);
         void set_pickup_time(const Time input_pickup_time);
         void set_return_time(const Time input_return_time);
         void set_payment_method(const short input_payment_method);
 
         string get_id();
         short get_status();
+        string get_customer_id();
         string get_customer_name();
+        string get_vehicle_id();
         string get_vehicle_model();
         Time get_pickup_time();
         Time get_return_time();
         short get_payment_method();
 };
 
-class BookAndRent
-{
-    public:
-        virtual void book_a_vehicle() = 0;
-        virtual void sign_a_contract() = 0;
-};
-
-class CarRentalMgmt : public BookAndRent
+class CarRentalMgmt
 {
     private:
         CarFleet *my_fleet;
         vector<Customer> *list_customers;
         vector<RentalContract> *list_contracts;
     
+    protected:
+        
+        
     public:
         CarRentalMgmt();
         ~CarRentalMgmt();

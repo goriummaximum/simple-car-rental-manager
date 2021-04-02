@@ -53,10 +53,12 @@ ServiceHistory::ServiceHistory(
                 short input_day = 0,
                 short input_month = 0,
                 short input_year = 0,
+                float input_mileage = 0,
                 string input_engine = "NA",
                 string input_transmission = "NA",
                 string input_tires = "NA"
         ) : id{input_id},
+            mileage{input_mileage},
             engine{input_engine},
             transmission{input_transmission},
             tires{input_tires}
@@ -95,6 +97,10 @@ short ServiceHistory::get_id()
 Time ServiceHistory::get_service_time()
 {
     return service_time;
+}
+float ServiceHistory::get_mileage()
+{
+    return mileage;
 }
 string ServiceHistory::get_engine()
 {
@@ -171,9 +177,9 @@ void Vehicle::set_manufacture_time(const Time input_manufacture_time)
 {
     manufacture_time = input_manufacture_time;
 }
-void Vehicle::set_mileage(const float input_mileage)
+void Vehicle::add_mileage(const float input_mileage)
 {
-    mileage = input_mileage;
+    mileage = mileage + input_mileage;
 }
 
 string Vehicle::get_id()
@@ -208,6 +214,17 @@ float Vehicle::get_mileage()
 {
     return mileage;
 }
+
+float Vehicle::compute_mileage_between(short idx1, short idx2)
+{
+    if(idx1 < 0 || idx1 >= service_history->size() || idx2 < 0 || idx2 >= service_history->size())
+    {
+        return -1;
+    }
+
+    return abs(service_history->at(idx1).get_mileage() - service_history->at(idx2).get_mileage());
+}
+
 
 
 Sport::Sport(
@@ -245,7 +262,6 @@ void Sport::add_service_history(ServiceHistory input_history)
     if (mileage > 1000)
     {
         service_history->push_back(input_history);
-        mileage = 0;
     }
 }
 

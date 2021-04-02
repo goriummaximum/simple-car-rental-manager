@@ -35,6 +35,7 @@ class ServiceHistory
     private:
         short id;
         Time service_time;
+        float mileage;
         string engine;
         string transmission;
         string tires;
@@ -46,6 +47,7 @@ class ServiceHistory
                 short input_day,
                 short input_month,
                 short input_year,
+                float input_mileage,
                 string input_input_engine,
                 string input_transmission,
                 string input_tires
@@ -59,6 +61,7 @@ class ServiceHistory
 
         short get_id();
         Time get_service_time();
+        float get_mileage();
         string get_engine();
         string get_transmission();
         string get_tires();
@@ -100,7 +103,7 @@ class Vehicle
         void set_color(const string input_color);
         void set_n_seats(const short input_n_seats);
         void set_manufacture_time(const Time input_manufacture_time);
-        void set_mileage(const float input_mileage);
+        void add_mileage(const float input_mileage);
 
         string get_id();
         bool get_status();
@@ -110,6 +113,8 @@ class Vehicle
         short get_n_seats();
         Time get_manufacture_time();
         float get_mileage();
+
+        float compute_mileage_between(short idx1, short idx2);
 
         virtual void add_service_history(ServiceHistory input_history) = 0;
 };
@@ -315,7 +320,6 @@ class CarRentalMgmt : public BookAndRent
         ~CarRentalMgmt();
 
         void service_fleet();
-
         void book_a_vehicle();
         void sign_a_contract();
 };

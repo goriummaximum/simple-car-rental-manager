@@ -312,9 +312,6 @@ class CarRentalMgmt : public BookAndRent
         vector<Customer> *list_customers;
         vector<RentalContract> *list_contracts;
     
-    protected:
-        
-        
     public:
         CarRentalMgmt();
         ~CarRentalMgmt();

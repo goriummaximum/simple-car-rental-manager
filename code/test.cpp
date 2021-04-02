@@ -1,46 +1,30 @@
-#include <iostream>
-#include <string>
-
+#include<iostream>
 using namespace std;
-
-class people
+ 
+class Base
 {
-    public:
-
-        people(string input_hair = "", string input_body = "gg")
-        {
-            hair = input_hair;
-            body = input_body;
-        }
-
-        string hair;
-        string body;
+   int x;
+public:
+    virtual void fun() = 0;
+    int getX() { return x; }
 };
-
-class student : public people
+ 
+// This class inherits from Base and implements fun()
+class Derived: public Base
 {
-    private:
-        int id;
-    
-    public:
-        student(int input_id);
-        void set_id(int input)
-        {
-        }
-        int get_id()
-        {
-            return id;
-        }
+    int y;
+public:
+    //void fun();
 };
-
-student::student(int input_id = 2) : people{"4", "6"}, id{input_id}{}
-
-int main()
+ 
+void Derived::Base::fun()
 {
-    student stu;
-    cout << stu.get_id();
-    cout << stu.hair;
-    cout << stu.body;
+    cout << "LOL\n";
+}
 
+int main(void)
+{
+    Derived d;
+    d.fun();
     return 0;
 }

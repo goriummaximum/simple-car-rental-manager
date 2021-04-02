@@ -47,6 +47,69 @@ short Time::get_year()
 
 
 
+ServiceHistory::ServiceHistory(
+                short input_id = -1,
+                short input_hour = 0,
+                short input_day = 0,
+                short input_month = 0,
+                short input_year = 0,
+                string input_engine = "NA",
+                string input_transmission = "NA",
+                string input_tires = "NA"
+        ) : id{input_id},
+            engine{input_engine},
+            transmission{input_transmission},
+            tires{input_tires}
+        {
+            service_time.set_hour(input_hour);
+            service_time.set_day(input_day);
+            service_time.set_month(input_month);
+            service_time.set_year(input_year);
+        }
+
+void ServiceHistory::set_id(short input_id)
+{
+    id = input_id;
+}
+void ServiceHistory::set_service_time(Time input_service_time)
+{
+    service_time = input_service_time;
+}
+void ServiceHistory::set_engine(string input_engine)
+{
+    engine = input_engine;
+}
+void ServiceHistory::set_transmission(string input_transmission)
+{
+    transmission = input_transmission;
+}
+void ServiceHistory::set_tires(string input_tires)
+{
+    tires = input_tires;
+}
+
+short ServiceHistory::get_id()
+{
+    return id;
+}
+Time ServiceHistory::get_service_time()
+{
+    return service_time;
+}
+string ServiceHistory::get_engine()
+{
+    return engine;
+}
+string ServiceHistory::get_transmission()
+{
+    return transmission;
+}
+string ServiceHistory::get_tires()
+{
+    return tires;
+}
+
+
 Vehicle::Vehicle(
             string input_id = "NA",
             string input_brand = "NA",
@@ -57,26 +120,30 @@ Vehicle::Vehicle(
             short input_manufacture_day = 0, 
             short input_manufacture_month = 0,
             short input_manufacture_year = 0,  
-            bool input_status = false
+            bool input_status = false,
+            float input_mileage = 0
         ) : id{input_id},
             brand{input_brand},
             model{input_model},
             color{input_color},
             n_seats{input_n_seats},
-            status{input_status}
+            status{input_status},
+            mileage{input_mileage}
 {
     manufacture_time.set_hour(input_manufacture_hour);
     manufacture_time.set_day(input_manufacture_day);
     manufacture_time.set_month(input_manufacture_month);
     manufacture_time.set_year(input_manufacture_year);
+
+    service_history = new vector<ServiceHistory>();
 };
 
 Vehicle::~Vehicle()
 {
-
+    delete service_history;
 }
 
-void Vehicle::set_id(const int input_id)
+void Vehicle::set_id(const string input_id)
 {
     id = input_id;
 }
@@ -103,6 +170,10 @@ void Vehicle::set_n_seats(const short input_n_seats)
 void Vehicle::set_manufacture_time(const Time input_manufacture_time)
 {
     manufacture_time = input_manufacture_time;
+}
+void Vehicle::set_mileage(const float input_mileage)
+{
+    mileage = input_mileage;
 }
 
 string Vehicle::get_id()
@@ -133,7 +204,10 @@ Time Vehicle::get_manufacture_time()
 {
     return manufacture_time;
 }
-
+float Vehicle::get_mileage()
+{
+    return mileage;
+}
 
 
 Sport::Sport(
@@ -147,7 +221,7 @@ Sport::Sport(
         short input_manufacture_month = 0,
         short input_manufacture_year = 0,  
         bool input_status = false,
-        short input_exhaust_pipe_type = 0
+        float input_mileage = 0
     ) : Vehicle{
             input_id,
             input_brand,
@@ -158,24 +232,22 @@ Sport::Sport(
             input_manufacture_day,
             input_manufacture_month,
             input_manufacture_year,
-            input_status
-        }, exhaust_pipe_type{input_exhaust_pipe_type}{};
+            input_status,
+            input_mileage
+        }{};
 Sport::~Sport()
 {
 
 }
 
-void Sport::set_exhaust_pipe_type(const short input_type)
+void Sport::add_service_history(ServiceHistory input_history)
 {
-    exhaust_pipe_type = input_type;
+    if (mileage > 1000)
+    {
+        service_history->push_back(input_history);
+        mileage = 0;
+    }
 }
-
-short Sport::get_exhaust_pipe_type()
-{
-    return exhaust_pipe_type;
-}
-
-
 
 Motorcycle::Motorcycle(
         string input_id = "NA",
@@ -188,6 +260,7 @@ Motorcycle::Motorcycle(
         short input_manufacture_month = 0,
         short input_manufacture_year = 0,  
         bool input_status = false,
+        float input_mileage = 0,
         bool input_is_helmet_included = false
     ) : Vehicle{
             input_id,
@@ -199,7 +272,8 @@ Motorcycle::Motorcycle(
             input_manufacture_day,
             input_manufacture_month,
             input_manufacture_year,
-            input_status
+            input_status,
+            input_mileage
         }, is_helmet_included{input_is_helmet_included}{};
 
 Motorcycle::~Motorcycle()
@@ -217,7 +291,14 @@ short Motorcycle::get_is_helmet_included()
     return is_helmet_included;
 }
 
-
+void Motorcycle::add_service_history(ServiceHistory input_history)
+{
+    if (mileage > 2000)
+    {
+        service_history->push_back(input_history);
+        mileage = 0;
+    }
+}
 
 SUV::SUV(
         string input_id = "NA",
@@ -230,6 +311,7 @@ SUV::SUV(
         short input_manufacture_month = 0,
         short input_manufacture_year = 0,  
         bool input_status = false,
+        float input_mileage = 0,
         bool input_is_bag_included = false
     ) : Vehicle{
             input_id,
@@ -241,7 +323,8 @@ SUV::SUV(
             input_manufacture_day,
             input_manufacture_month,
             input_manufacture_year,
-            input_status
+            input_status,
+            input_mileage
         }, is_bag_included{input_is_bag_included}{};
 SUV::~SUV()
 {
@@ -258,7 +341,14 @@ short SUV::get_is_bag_included()
     return is_bag_included;
 }
 
-
+void SUV::add_service_history(ServiceHistory input_history)
+{
+    if (mileage > 3000)
+    {
+        service_history->push_back(input_history);
+        mileage = 0;
+    }
+}
 
 CarFleet::CarFleet()
 {
@@ -475,21 +565,9 @@ CarRentalMgmt::~CarRentalMgmt()
     delete list_contracts;
 }
 
-void CarRentalMgmt::fill_Vehicle()
+void CarRentalMgmt::service_fleet()
 {
     
-}
-void CarRentalMgmt::fill_Sport()
-{
-
-}
-void CarRentalMgmt::fill_Motorcycle()
-{
-
-}
-void CarRentalMgmt::fill_SUV()
-{
-
 }
 
 void CarRentalMgmt::book_a_vehicle()

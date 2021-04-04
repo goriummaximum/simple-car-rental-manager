@@ -8,6 +8,7 @@ int main()
     Motorcycle my_motor("123");
 
     car_manager->add_Motorcycle(my_motor);
+    car_manager->get_Motorcycle_by_id("123")->set_brand("Ford");
     cout << car_manager->get_Motorcycle_by_id("123")->get_brand();
 
     delete car_manager;

@@ -140,13 +140,11 @@ Vehicle::Vehicle(
     manufacture_time.set_day(input_manufacture_day);
     manufacture_time.set_month(input_manufacture_month);
     manufacture_time.set_year(input_manufacture_year);
-
-    //service_history = new vector<ServiceHistory>();
 };
 
 Vehicle::~Vehicle()
 {
-    //delete service_history;
+
 }
 
 void Vehicle::set_id(const string input_id)
@@ -217,12 +215,12 @@ float Vehicle::get_mileage()
 
 float Vehicle::compute_mileage_between(short idx1, short idx2)
 {
-    if(idx1 < 0 || idx1 >= service_history->size() || idx2 < 0 || idx2 >= service_history->size())
+    if(idx1 < 0 || idx1 >= service_history.size() || idx2 < 0 || idx2 >= service_history.size())
     {
         return -1;
     }
 
-    return abs(service_history->at(idx1).get_mileage() - service_history->at(idx2).get_mileage());
+    return abs(service_history.at(idx1).get_mileage() - service_history.at(idx2).get_mileage());
 }
 
 
@@ -261,7 +259,7 @@ void Sport::add_service_history(ServiceHistory input_history)
 {
     if (mileage > 1000)
     {
-        service_history->push_back(input_history);
+        service_history.push_back(input_history);
     }
 }
 
@@ -311,7 +309,7 @@ void Motorcycle::add_service_history(ServiceHistory input_history)
 {
     if (mileage > 2000)
     {
-        service_history->push_back(input_history);
+        service_history.push_back(input_history);
         mileage = 0;
     }
 }
@@ -361,7 +359,7 @@ void SUV::add_service_history(ServiceHistory input_history)
 {
     if (mileage > 3000)
     {
-        service_history->push_back(input_history);
+        service_history.push_back(input_history);
         mileage = 0;
     }
 }
@@ -592,6 +590,17 @@ string Customer::get_phone_number()
     return phone_number;
 }
 
+
+CustomersData::CustomersData()
+{
+    list_customers = new vector<Customer>();
+}
+CustomersData::~CustomersData()
+{
+    delete list_customers;
+}
+
+
 RentalContract::RentalContract(
             string input_id,
             short input_status,
@@ -692,18 +701,28 @@ short RentalContract::get_payment_method()
 }
 
 
+RentalContractsData::RentalContractsData()
+{
+    list_contracts = new vector<RentalContract>();
+}
+RentalContractsData::~RentalContractsData()
+{
+    delete list_contracts;
+}
+
+
 
 CarRentalMgmt::CarRentalMgmt()
 {
     my_fleet = new CarFleet();
-    list_customers = new vector<Customer>();
-    list_contracts = new vector<RentalContract>();
+    my_customers_data = new CustomersData();
+    my_rental_contracts_data = new RentalContractsData();
 }
 CarRentalMgmt::~CarRentalMgmt()
 {
     delete my_fleet;
-    delete list_customers;
-    delete list_contracts;
+    delete my_customers_data;
+    delete my_rental_contracts_data;
 }
 
 Sport *CarRentalMgmt::get_Sport_by_id(string id)

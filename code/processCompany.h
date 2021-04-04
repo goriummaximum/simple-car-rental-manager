@@ -78,7 +78,7 @@ class Vehicle
         short n_seats;
         Time manufacture_time;
         float mileage;
-        vector<ServiceHistory> *service_history;
+        vector<ServiceHistory> service_history;
 
     public:
         Vehicle(
@@ -212,9 +212,9 @@ class CarFleet
         short get_Motorcycle_size();
         short get_SUV_size();
 
-        void add_Sport(Sport &input_Sport);
-        void add_Motorcycle(Motorcycle &input_Motorcycle);
-        void add_SUV(SUV &input_SUV);
+        void add_Sport(Sport input_Sport);
+        void add_Motorcycle(Motorcycle input_Motorcycle);
+        void add_SUV(SUV input_SUV);
 
         Sport *get_Sport_by_id(string id);
         Motorcycle *get_Motorcycle_by_id(string id);
@@ -268,6 +268,16 @@ class Customer
         string get_phone_number();
 };
 
+class CustomersData
+{
+    private:
+        vector<Customer> *list_customers;
+    
+    public:
+        CustomersData();
+        ~CustomersData();
+};
+
 class RentalContract
 {
     private:
@@ -319,6 +329,16 @@ class RentalContract
         short get_payment_method();
 };
 
+class RentalContractsData
+{
+    private:
+        vector<RentalContract> *list_contracts;
+    
+    public:
+        RentalContractsData();
+        ~RentalContractsData();
+};
+
 class BookAndRent
 {
     public:
@@ -330,13 +350,14 @@ class CarRentalMgmt : public BookAndRent
 {
     private:
         CarFleet *my_fleet;
-        vector<Customer> *list_customers;
-        vector<RentalContract> *list_contracts;
+        CustomersData *my_customers_data;
+        RentalContractsData *my_rental_contracts_data;
     
     public:
         CarRentalMgmt();
         ~CarRentalMgmt();
 
+        //VEHICLE
         Sport *get_Sport_by_id(string id);
         Motorcycle *get_Motorcycle_by_id(string id);
         SUV *get_SUV_by_id(string id);
@@ -346,6 +367,8 @@ class CarRentalMgmt : public BookAndRent
         void add_SUV(SUV input_SUV);
 
         void remove_vehicle_by_id(string id);
+
+        //CUSTOMER
 
         void service_fleet();
         void book_a_vehicle();

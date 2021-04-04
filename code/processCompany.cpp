@@ -2,14 +2,14 @@
 #include "processCompany.h"
 
 Time::Time(
-    short input_hour = 0,
-    short input_day = 0,
-    short input_month = 0,
-    short input_year = 0
-    ) : hour{input_hour},
-        day{input_day},
-        month{input_month},
-        year{input_year}{};
+        short input_hour,
+        short input_day,
+        short input_month,
+        short input_year
+        ) : hour{input_hour},
+            day{input_day},
+            month{input_month},
+            year{input_year}{};
 
 void Time::set_hour(short input_hour)
 {
@@ -48,15 +48,15 @@ short Time::get_year()
 
 
 ServiceHistory::ServiceHistory(
-                short input_id = -1,
-                short input_hour = 0,
-                short input_day = 0,
-                short input_month = 0,
-                short input_year = 0,
-                float input_mileage = 0,
-                string input_engine = "NA",
-                string input_transmission = "NA",
-                string input_tires = "NA"
+                short input_id,
+                short input_hour,
+                short input_day,
+                short input_month,
+                short input_year,
+                float input_mileage,
+                string input_engine,
+                string input_transmission,
+                string input_tires
         ) : id{input_id},
             mileage{input_mileage},
             engine{input_engine},
@@ -117,17 +117,17 @@ string ServiceHistory::get_tires()
 
 
 Vehicle::Vehicle(
-            string input_id = "NA",
-            string input_brand = "NA",
-            string input_model = "NA",
-            string input_color = "NA", 
-            short input_n_seats = 0,
-            short input_manufacture_hour = 0,
-            short input_manufacture_day = 0, 
-            short input_manufacture_month = 0,
-            short input_manufacture_year = 0,  
-            bool input_status = false,
-            float input_mileage = 0
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_hour,
+            short input_manufacture_day, 
+            short input_manufacture_month,
+            short input_manufacture_year,  
+            bool input_status,
+            float input_mileage
         ) : id{input_id},
             brand{input_brand},
             model{input_model},
@@ -141,12 +141,12 @@ Vehicle::Vehicle(
     manufacture_time.set_month(input_manufacture_month);
     manufacture_time.set_year(input_manufacture_year);
 
-    service_history = new vector<ServiceHistory>();
+    //service_history = new vector<ServiceHistory>();
 };
 
 Vehicle::~Vehicle()
 {
-    delete service_history;
+    //delete service_history;
 }
 
 void Vehicle::set_id(const string input_id)
@@ -228,17 +228,17 @@ float Vehicle::compute_mileage_between(short idx1, short idx2)
 
 
 Sport::Sport(
-        string input_id = "NA",
-        string input_brand = "NA",
-        string input_model = "NA",
-        string input_color = "NA", 
-        short input_n_seats = 0,
-        short input_manufacture_hour = 0,
-        short input_manufacture_day = 0, 
-        short input_manufacture_month = 0,
-        short input_manufacture_year = 0,  
-        bool input_status = false,
-        float input_mileage = 0
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_hour,
+        short input_manufacture_day, 
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage
     ) : Vehicle{
             input_id,
             input_brand,
@@ -266,18 +266,18 @@ void Sport::add_service_history(ServiceHistory input_history)
 }
 
 Motorcycle::Motorcycle(
-        string input_id = "NA",
-        string input_brand = "NA",
-        string input_model = "NA",
-        string input_color = "NA", 
-        short input_n_seats = 0,
-        short input_manufacture_hour = 0,
-        short input_manufacture_day = 0, 
-        short input_manufacture_month = 0,
-        short input_manufacture_year = 0,  
-        bool input_status = false,
-        float input_mileage = 0,
-        bool input_is_helmet_included = false
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_hour,
+        short input_manufacture_day, 
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_helmet_included
     ) : Vehicle{
             input_id,
             input_brand,
@@ -317,18 +317,18 @@ void Motorcycle::add_service_history(ServiceHistory input_history)
 }
 
 SUV::SUV(
-        string input_id = "NA",
-        string input_brand = "NA",
-        string input_model = "NA",
-        string input_color = "NA", 
-        short input_n_seats = 0,
-        short input_manufacture_hour = 0,
-        short input_manufacture_day = 0, 
-        short input_manufacture_month = 0,
-        short input_manufacture_year = 0,  
-        bool input_status = false,
-        float input_mileage = 0,
-        bool input_is_bag_included = false
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_hour,
+        short input_manufacture_day, 
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_bag_included
     ) : Vehicle{
             input_id,
             input_brand,
@@ -374,25 +374,149 @@ CarFleet::CarFleet()
 }
 
 CarFleet::~CarFleet()
-{
+{   
     delete list_sport;
     delete list_motorcycle;
     delete list_SUV;
 }
 
+short CarFleet::find_idx_of_id_Sport(string id)
+{
+    for (short i = 0; i < list_sport->size(); ++i)
+    {
+        if (list_sport->at(i).get_id() == id)
+        {
+            return i;
+        }
+    }
 
+    return -1;
+}
+short CarFleet::find_idx_of_id_Motorcycle(string id)
+{
+    for (short i = 0; i < list_motorcycle->size(); ++i)
+    {
+        if (list_motorcycle->at(i).get_id() == id)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+short CarFleet::find_idx_of_id_SUV(string id)
+{
+    for (short i = 0; i < list_SUV->size(); ++i)
+    {
+        if (list_SUV->at(i).get_id() == id)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+short CarFleet::get_Sport_size()
+{
+    return list_sport->size();
+}
+short CarFleet::get_Motorcycle_size()
+{
+    return list_motorcycle->size();
+}
+short CarFleet::get_SUV_size()
+{
+    return list_SUV->size();
+}
+
+void CarFleet::add_Sport(Sport input_Sport)
+{
+    list_sport->push_back(input_Sport);
+}
+void CarFleet::add_Motorcycle(Motorcycle input_Motorcycle)
+{
+    list_motorcycle->push_back(input_Motorcycle);
+}
+void CarFleet::add_SUV(SUV input_SUV)
+{
+    list_SUV->push_back(input_SUV);
+}
+
+
+Sport *CarFleet::get_Sport_by_id(string id)
+{
+    short idx = find_idx_of_id_Sport(id);
+
+    if (idx != -1)
+    {
+        return &list_sport->at(idx);
+    }
+
+    return NULL;
+}
+Motorcycle *CarFleet::get_Motorcycle_by_id(string id)
+{
+    short idx = find_idx_of_id_Motorcycle(id);
+
+    if (idx != -1)
+    {
+        return &list_motorcycle->at(idx);
+    }
+
+    return NULL;
+}
+SUV *CarFleet::get_SUV_by_id(string id)
+{
+    short idx = find_idx_of_id_SUV(id);
+
+    if (idx != -1)
+    {
+        return &list_SUV->at(idx);
+    }
+
+    return NULL;
+}
+
+void CarFleet::remove_Sport_by_id(string id)
+{
+    short idx = find_idx_of_id_Sport(id);
+    
+    if (idx != -1)
+    {
+        list_sport->erase(list_sport->begin() + idx);
+    }
+}
+void CarFleet::remove_Motorcycle_by_id(string id)
+{
+    short idx = find_idx_of_id_Motorcycle(id);
+    
+    if (idx != -1)
+    {
+        list_motorcycle->erase(list_motorcycle->begin() + idx);
+    }
+}
+void CarFleet::remove_SUV_by_id(string id)
+{
+    short idx = find_idx_of_id_SUV(id);
+    
+    if (idx != -1)
+    {
+        list_SUV->erase(list_SUV->begin() + idx);
+    }
+}
 
 Customer::Customer(
-            string input_id = "NA",
-            string input_name = "NA",
-            bool input_gender = false,
-            short hour = 0,
-            short day = 0,
-            short month = 0,
-            short year = 0,
-            string input_email = "NA",
-            string input_driver_license_id = "NA",
-            string input_phone_number = "NA"
+            string input_id,
+            string input_name,
+            bool input_gender,
+            short hour,
+            short day,
+            short month,
+            short year,
+            string input_email,
+            string input_driver_license_id,
+            string input_phone_number
         ) : id{input_id},
             name{input_name},
             gender{input_gender},
@@ -469,21 +593,22 @@ string Customer::get_phone_number()
 }
 
 RentalContract::RentalContract(
-            string input_id = "NA",
-            short input_status = 0,
-            string input_customer_id = "NA",
-            string input_customer_name = "NA",
-            string input_vehicle_id = "NA",
-            string input_vehicle_model = "NA",
-            short input_pickup_hour = 0,
-            short input_pickup_day = 0,
-            short input_pickup_month = 0,
-            short input_pickup_year = 0,
-            short input_return_hour = 0,
-            short input_return_day = 0,
-            short input_return_month = 0,
-            short input_return_year = 0,
-            short input_payment_method = 0
+            string input_id,
+            short input_status,
+            string input_customer_id,
+            string input_customer_name,
+            string input_vehicle_id,
+            string input_vehicle_model,
+            short input_pickup_hour,
+            short input_pickup_day,
+            short input_pickup_month,
+            short input_pickup_year,
+            short input_return_hour,
+            short input_return_day,
+            short input_return_month,
+            short input_return_year,
+            short input_payment_method
+
         ) : id{input_id},
             status{input_status},
             customer_id{input_customer_id},
@@ -579,6 +704,50 @@ CarRentalMgmt::~CarRentalMgmt()
     delete my_fleet;
     delete list_customers;
     delete list_contracts;
+}
+
+Sport *CarRentalMgmt::get_Sport_by_id(string id)
+{
+    return my_fleet->get_Sport_by_id(id);
+}
+Motorcycle *CarRentalMgmt::get_Motorcycle_by_id(string id)
+{
+    return my_fleet->get_Motorcycle_by_id(id);
+}
+SUV *CarRentalMgmt::get_SUV_by_id(string id)
+{
+    return my_fleet->get_SUV_by_id(id);
+}
+
+void CarRentalMgmt::add_Sport(Sport input_Sport)
+{
+    my_fleet->add_Sport(input_Sport);
+}
+void CarRentalMgmt::add_Motorcycle(Motorcycle input_Motorcycle)
+{
+    my_fleet->add_Motorcycle(input_Motorcycle);
+}
+void CarRentalMgmt::add_SUV(SUV input_SUV)
+{
+    my_fleet->add_SUV(input_SUV);
+}
+
+void CarRentalMgmt::remove_vehicle_by_id(string id)
+{
+    if (id.at(0) == 'S')
+    {
+        my_fleet->remove_Sport_by_id(id);
+    }
+
+    else if (id.at(0) == 'M')
+    {
+        my_fleet->remove_Motorcycle_by_id(id);
+    }
+
+    else if (id.at(0) == 'U')
+    {
+        my_fleet->remove_SUV_by_id(id);
+    }
 }
 
 void CarRentalMgmt::service_fleet()

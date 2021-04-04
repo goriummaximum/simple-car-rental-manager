@@ -1,30 +1,37 @@
 #include<iostream>
 using namespace std;
  
-class Base
-{
-   int x;
-public:
-    virtual void fun() = 0;
-    int getX() { return x; }
-};
- 
-// This class inherits from Base and implements fun()
-class Derived: public Base
-{
-    int y;
-public:
-    //void fun();
-};
- 
-void Derived::Base::fun()
-{
-    cout << "LOL\n";
-}
+ class a
+ {
+     private:
+        int x;
+    
+    public:
+        a(int input_x = 0)
+        {
+            x = input_x;
+        }
+
+        void set_x(int input_x)
+        {
+            x = input_x;
+        }
+
+        int *get_x()
+        {
+            return &x;
+        }
+        
+ };
 
 int main(void)
 {
-    Derived d;
-    d.fun();
+    auto x = a();
+    auto *y = x.get_x();
+    cout << *y;
+    x.set_x(7);
+    cout << *y;
+
+
     return 0;
 }

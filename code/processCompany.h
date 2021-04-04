@@ -13,10 +13,10 @@ class Time
     
     public:
         Time(
-            short input_hour,
-            short input_day,
-            short input_month,
-            short input_year
+            short input_hour = 0,
+            short input_day = 0,
+            short input_month = 0,
+            short input_year = 0
         );
 
         void set_hour(short input_hour);
@@ -42,15 +42,15 @@ class ServiceHistory
 
     public:
         ServiceHistory(
-                short input_id,
-                short input_hour,
-                short input_day,
-                short input_month,
-                short input_year,
-                float input_mileage,
-                string input_input_engine,
-                string input_transmission,
-                string input_tires
+                short input_id = -1,
+                short input_hour = 0,
+                short input_day = 0,
+                short input_month = 0,
+                short input_year = 0,
+                float input_mileage = 0,
+                string input_engine = "NA",
+                string input_transmission = "NA",
+                string input_tires = "NA"
         );
 
         void set_id(short input_id);
@@ -70,7 +70,7 @@ class ServiceHistory
 class Vehicle
 {
     protected:
-        string id;
+        string id;      //Sport: S0; Motor: M123; SUV: U5
         bool status;
         string brand;
         string model;
@@ -82,17 +82,17 @@ class Vehicle
 
     public:
         Vehicle(
-            string input_id,
-            string input_brand,
-            string input_model,
-            string input_color, 
-            short input_n_seats,
-            short input_manufacture_hour,
-            short input_manufacture_day, 
-            short input_manufacture_month,
-            short input_manufacture_year,  
-            bool input_status,
-            float input_mileage
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_hour = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
             );
         ~Vehicle();
 
@@ -122,17 +122,17 @@ class Vehicle
 class Sport : public Vehicle {
     public:
         Sport(
-            string input_id,
-            string input_brand,
-            string input_model,
-            string input_color, 
-            short input_n_seats,
-            short input_manufacture_hour,
-            short input_manufacture_day, 
-            short input_manufacture_month,
-            short input_manufacture_year,  
-            bool input_status,
-            float input_mileage
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_hour = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
             );
         ~Sport();
 
@@ -144,18 +144,18 @@ class Motorcycle : public Vehicle {
         bool is_helmet_included;
     public:
         Motorcycle(
-            string input_id,
-            string input_brand,
-            string input_model,
-            string input_color, 
-            short input_n_seats,
-            short input_manufacture_hour,
-            short input_manufacture_day, 
-            short input_manufacture_month,
-            short input_manufacture_year,  
-            bool input_status,
-            float input_mileage,
-            bool input_is_helmet_included
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_hour = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_helmet_included = false
             );
         ~Motorcycle();
 
@@ -171,18 +171,18 @@ class SUV : public Vehicle {
     
     public:
         SUV(
-            string input_id,
-            string input_brand,
-            string input_model,
-            string input_color, 
-            short input_n_seats,
-            short input_manufacture_hour,
-            short input_manufacture_day, 
-            short input_manufacture_month,
-            short input_manufacture_year,  
-            bool input_status,
-            float input_mileage,
-            bool input_is_bag_included
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_hour = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_bag_included = false
             );
         ~SUV();
 
@@ -199,9 +199,30 @@ class CarFleet
         vector<Motorcycle> *list_motorcycle;
         vector<SUV> *list_SUV;
     
+    protected:
+        short find_idx_of_id_Sport(string id);
+        short find_idx_of_id_Motorcycle(string id);
+        short find_idx_of_id_SUV(string id);
+
     public:
         CarFleet();
         ~CarFleet();
+
+        short get_Sport_size();
+        short get_Motorcycle_size();
+        short get_SUV_size();
+
+        void add_Sport(Sport &input_Sport);
+        void add_Motorcycle(Motorcycle &input_Motorcycle);
+        void add_SUV(SUV &input_SUV);
+
+        Sport *get_Sport_by_id(string id);
+        Motorcycle *get_Motorcycle_by_id(string id);
+        SUV *get_SUV_by_id(string id);
+
+        void remove_Sport_by_id(string id);
+        void remove_Motorcycle_by_id(string id);
+        void remove_SUV_by_id(string id);
 };
 
 class Customer
@@ -217,16 +238,16 @@ class Customer
     
     public:
         Customer(
-            string input_id,
-            string input_name,
-            bool input_gender,
-            short hour,
-            short day,
-            short month,
-            short year,
-            string input_email,
-            string input_driver_license_id,
-            string input_phone_number
+            string input_id = "NA",
+            string input_name = "NA",
+            bool input_gender = false,
+            short hour = 0,
+            short day = 0,
+            short month = 0,
+            short year = 0,
+            string input_email = "NA",
+            string input_driver_license_id = "NA",
+            string input_phone_number = "NA"
         );
         ~Customer();
 
@@ -262,21 +283,21 @@ class RentalContract
     
     public:
         RentalContract(
-            string input_id,
-            short input_status,
-            string input_customer_id,
-            string input_customer_name,
-            string input_vehicle_id,
-            string input_vehicle_model,
-            short input_pickup_hour,
-            short input_pickup_day,
-            short input_pickup_month,
-            short input_pickup_year,
-            short input_return_hour,
-            short input_return_day,
-            short input_return_month,
-            short input_return_year,
-            short input_payment_method
+            string input_id = "NA",
+            short input_status = 0,
+            string input_customer_id = "NA",
+            string input_customer_name = "NA",
+            string input_vehicle_id = "NA",
+            string input_vehicle_model = "NA",
+            short input_pickup_hour = 0,
+            short input_pickup_day = 0,
+            short input_pickup_month = 0,
+            short input_pickup_year = 0,
+            short input_return_hour = 0,
+            short input_return_day = 0,
+            short input_return_month = 0,
+            short input_return_year = 0,
+            short input_payment_method = 0
         );
 
         ~RentalContract();
@@ -315,6 +336,16 @@ class CarRentalMgmt : public BookAndRent
     public:
         CarRentalMgmt();
         ~CarRentalMgmt();
+
+        Sport *get_Sport_by_id(string id);
+        Motorcycle *get_Motorcycle_by_id(string id);
+        SUV *get_SUV_by_id(string id);
+
+        void add_Sport(Sport input_Sport);
+        void add_Motorcycle(Motorcycle input_Motorcycle);
+        void add_SUV(SUV input_SUV);
+
+        void remove_vehicle_by_id(string id);
 
         void service_fleet();
         void book_a_vehicle();

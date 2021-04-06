@@ -378,43 +378,6 @@ CarFleet::~CarFleet()
     delete list_SUV;
 }
 
-short CarFleet::find_idx_of_id_Sport(string id)
-{
-    for (short i = 0; i < list_sport->size(); ++i)
-    {
-        if (list_sport->at(i).get_id() == id)
-        {
-            return i;
-        }
-    }
-
-    return -1;
-}
-short CarFleet::find_idx_of_id_Motorcycle(string id)
-{
-    for (short i = 0; i < list_motorcycle->size(); ++i)
-    {
-        if (list_motorcycle->at(i).get_id() == id)
-        {
-            return i;
-        }
-    }
-
-    return -1;
-}
-short CarFleet::find_idx_of_id_SUV(string id)
-{
-    for (short i = 0; i < list_SUV->size(); ++i)
-    {
-        if (list_SUV->at(i).get_id() == id)
-        {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
 short CarFleet::get_Sport_size()
 {
     return list_sport->size();
@@ -444,33 +407,36 @@ void CarFleet::add_SUV(SUV input_SUV)
 
 Sport *CarFleet::get_Sport_by_id(string id)
 {
-    short idx = find_idx_of_id_Sport(id);
-
-    if (idx != -1)
+    for (short i = 0; i < list_sport->size(); ++i)
     {
-        return &list_sport->at(idx);
+        if (list_sport->at(i).get_id() == id)
+        {
+            return &list_sport->at(i);
+        }
     }
 
     return NULL;
 }
 Motorcycle *CarFleet::get_Motorcycle_by_id(string id)
 {
-    short idx = find_idx_of_id_Motorcycle(id);
-
-    if (idx != -1)
+    for (short i = 0; i < list_motorcycle->size(); ++i)
     {
-        return &list_motorcycle->at(idx);
+        if (list_motorcycle->at(i).get_id() == id)
+        {
+            return &list_motorcycle->at(i);
+        }
     }
 
     return NULL;
 }
 SUV *CarFleet::get_SUV_by_id(string id)
 {
-    short idx = find_idx_of_id_SUV(id);
-
-    if (idx != -1)
+    for (short i = 0; i < list_SUV->size(); ++i)
     {
-        return &list_SUV->at(idx);
+        if (list_SUV->at(i).get_id() == id)
+        {
+            return &list_SUV->at(i);
+        }
     }
 
     return NULL;
@@ -478,29 +444,35 @@ SUV *CarFleet::get_SUV_by_id(string id)
 
 void CarFleet::remove_Sport_by_id(string id)
 {
-    short idx = find_idx_of_id_Sport(id);
-    
-    if (idx != -1)
+    for (short i = 0; i < list_sport->size(); ++i)
     {
-        list_sport->erase(list_sport->begin() + idx);
+        if (list_sport->at(i).get_id() == id)
+        {
+            list_sport->erase(list_sport->begin() + i);
+            return;
+        }
     }
 }
 void CarFleet::remove_Motorcycle_by_id(string id)
 {
-    short idx = find_idx_of_id_Motorcycle(id);
-    
-    if (idx != -1)
+    for (short i = 0; i < list_motorcycle->size(); ++i)
     {
-        list_motorcycle->erase(list_motorcycle->begin() + idx);
+        if (list_motorcycle->at(i).get_id() == id)
+        {
+            list_motorcycle->erase(list_motorcycle->begin() + i);
+            return;
+        }
     }
 }
 void CarFleet::remove_SUV_by_id(string id)
 {
-    short idx = find_idx_of_id_SUV(id);
-    
-    if (idx != -1)
+    for (short i = 0; i < list_SUV->size(); ++i)
     {
-        list_SUV->erase(list_SUV->begin() + idx);
+        if (list_SUV->at(i).get_id() == id)
+        {
+            list_SUV->erase(list_SUV->begin() + i);
+            return;
+        }
     }
 }
 
@@ -599,6 +571,25 @@ CustomersData::~CustomersData()
 {
     delete list_customers;
 }
+
+Customer *CustomersData::get_customer_by_id(string id)
+{
+    for (short i = 0; i < list_customers->size(); i++)
+    {
+        if (list_customers->at(i).get_id() == id)
+        {
+            return &list_customers->at(i);
+        }
+    }
+
+    return NULL;
+}
+
+void CustomersData::add_a_customer(Customer customer)
+{
+    list_customers->push_back(customer);
+}
+
 
 
 RentalContract::RentalContract(
@@ -710,6 +701,16 @@ RentalContractsData::~RentalContractsData()
     delete list_contracts;
 }
 
+short RentalContractsData::get_customer_size()
+{
+    return list_contracts->size();
+}
+
+void RentalContractsData::add_a_contract(RentalContract contract)
+{
+    list_contracts->push_back(contract);
+}
+
 
 
 CarRentalMgmt::CarRentalMgmt()
@@ -774,11 +775,74 @@ void CarRentalMgmt::service_fleet()
     
 }
 
-void CarRentalMgmt::book_a_vehicle()
+Customer *CarRentalMgmt::get_customer_by_id(string id)
+{
+    return NULL;
+}
+
+void CarRentalMgmt::add_a_customer(Customer customer)
+{
+    my_customers_data->add_a_customer(customer);
+}
+
+void CarRentalMgmt::book_a_vehicle(
+                string vehicle_id, 
+                string customer_id, 
+                short payment_method, 
+                Time pickup_time, 
+                Time return_time
+                )
 {
 
+    string vehicle_name;
+    string customer_name;
+
+    Customer *cus = my_customers_data->get_customer_by_id(customer_id);
+    if (cus == NULL) return;
+    customer_name = cus->get_name();
+
+    if (vehicle_id[0] == 'S')
+    {
+        Sport *vehicle = my_fleet->get_Sport_by_id(vehicle_id);
+        if (vehicle == NULL) return;
+        vehicle_name = vehicle->get_brand() + vehicle->get_model();
+        vehicle->set_status(1);
+    }
+
+    else if (vehicle_id[0] == 'M')
+    {
+        Motorcycle *vehicle = my_fleet->get_Motorcycle_by_id(vehicle_id);
+        if (vehicle == NULL) return;
+        vehicle_name = vehicle->get_brand() + vehicle->get_model();
+        vehicle->set_status(1);
+    }
+    
+    else if (vehicle_id[0] == 'U')
+    {
+        SUV *vehicle = my_fleet->get_SUV_by_id(vehicle_id);
+        if (vehicle == NULL) return;
+        vehicle_name = vehicle->get_brand() + vehicle->get_model();
+        vehicle->set_status(1);
+    }
+    
+    temp_contract = RentalContract(
+            to_string(my_rental_contracts_data->get_customer_size() + 1),
+            1,
+            customer_id,
+            customer_name,
+            vehicle_id,
+            vehicle_name,
+            pickup_time.get_hour(),
+            pickup_time.get_day(),
+            pickup_time.get_month(),
+            pickup_time.get_year(),
+            return_time.get_hour(),
+            return_time.get_day(),
+            return_time.get_month(),
+            return_time.get_year()
+            );
 }
 void CarRentalMgmt::sign_a_contract()
 {
-
+    my_rental_contracts_data->add_a_contract(temp_contract);
 }

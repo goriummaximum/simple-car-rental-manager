@@ -71,7 +71,7 @@ class Vehicle
 {
     protected:
         string id;      //Sport: S0; Motor: M123; SUV: U5
-        bool status;
+        bool status;    //0: available, 1: unavailable
         string brand;
         string model;
         string color;
@@ -199,11 +199,6 @@ class CarFleet
         vector<Motorcycle> *list_motorcycle;
         vector<SUV> *list_SUV;
     
-    protected:
-        short find_idx_of_id_Sport(string id);
-        short find_idx_of_id_Motorcycle(string id);
-        short find_idx_of_id_SUV(string id);
-
     public:
         CarFleet();
         ~CarFleet();
@@ -276,6 +271,9 @@ class CustomersData
     public:
         CustomersData();
         ~CustomersData();
+
+        Customer *get_customer_by_id(string id);
+        void add_a_customer(Customer customer);
 };
 
 class RentalContract
@@ -337,12 +335,20 @@ class RentalContractsData
     public:
         RentalContractsData();
         ~RentalContractsData();
+
+        short get_customer_size();
+        void add_a_contract(RentalContract contract);
 };
 
 class BookAndRent
 {
     public:
-        virtual void book_a_vehicle() = 0;
+        virtual void book_a_vehicle(
+                    string vehicle_id, 
+                    string customer_id,
+                    short payment_method, 
+                    Time pickup_time, 
+                    Time return_time) = 0;
         virtual void sign_a_contract() = 0;
 };
 
@@ -352,6 +358,9 @@ class CarRentalMgmt : public BookAndRent
         CarFleet *my_fleet;
         CustomersData *my_customers_data;
         RentalContractsData *my_rental_contracts_data;
+    
+    protected:
+        RentalContract temp_contract;
     
     public:
         CarRentalMgmt();
@@ -369,9 +378,17 @@ class CarRentalMgmt : public BookAndRent
         void remove_vehicle_by_id(string id);
 
         //CUSTOMER
+        Customer *get_customer_by_id(string id);
+        void add_a_customer(Customer customer);
 
         void service_fleet();
-        void book_a_vehicle();
+        void book_a_vehicle(
+                    string vehicle_id, 
+                    string customer_id,
+                    short payment_method, 
+                    Time pickup_time, 
+                    Time return_time
+                    );
         void sign_a_contract();
 };
 

@@ -590,7 +590,20 @@ void CustomersData::add_a_customer(Customer customer)
     list_customers->push_back(customer);
 }
 
+Customer *CustomersData::get_customer_at(short idx)
+{
+    if (idx >= list_customers->size())
+    {
+        return NULL;
+    }
 
+    return &list_customers->at(idx);
+}
+
+short CustomersData::get_list_size()
+{
+    return list_customers->size();
+}
 
 RentalContract::RentalContract(
             string input_id,
@@ -775,9 +788,36 @@ void CarRentalMgmt::service_fleet()
     
 }
 
+void CarRentalMgmt::print_customers_data()
+{
+    cout << "No" 
+        << setw(5) << "ID"
+        << setw(25) << "Name"
+        << setw(20) << "Gender"
+        << setw(20) << "DOB"
+        << setw(15) << "Phone"
+        << setw(20) << "License"
+        << setw(20) << "Email" << endl;
+
+    for (short i = 0; i < my_customers_data->get_list_size(); i++)
+    {
+        Customer *temp = my_customers_data->get_customer_at(i);
+        cout << i 
+            << setw(5) << temp->get_id() 
+            << setw(25) << temp->get_name() 
+            << setw(10) << temp->get_gender()
+            << setw(20) << temp->get_dob().get_day() << '/'
+            << temp->get_dob().get_month() << '/'
+            << temp->get_dob().get_year()
+            << setw(15) << temp->get_phone_number()
+            << setw(20) << temp->get_driver_license_id()
+            << setw(20) << temp->get_email() << endl;
+    }
+}
+
 Customer *CarRentalMgmt::get_customer_by_id(string id)
 {
-    return NULL;
+    return my_customers_data->get_customer_by_id(id);
 }
 
 void CarRentalMgmt::add_a_customer(Customer customer)

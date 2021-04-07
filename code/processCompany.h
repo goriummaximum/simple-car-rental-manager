@@ -272,6 +272,8 @@ class CustomersData
         CustomersData();
         ~CustomersData();
 
+        short get_list_size();
+        Customer *get_customer_at(short idx);
         Customer *get_customer_by_id(string id);
         void add_a_customer(Customer customer);
 };
@@ -378,6 +380,7 @@ class CarRentalMgmt : public BookAndRent
         void remove_vehicle_by_id(string id);
 
         //CUSTOMER
+        void print_customers_data();
         Customer *get_customer_by_id(string id);
         void add_a_customer(Customer customer);
 

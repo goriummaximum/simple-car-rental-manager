@@ -16,11 +16,8 @@ int main()
     car_manager->add_a_customer(Customer("00", "Ho Hoang Thien Long","NA", 1, 29, 2, 2000, "NA", "09123", "123"));
     car_manager->add_a_customer(Customer("01", "Tien Doan","NA", 1, 29, 2, 2000, "NA", "2435345", "34"));
     car_manager->add_a_customer(Customer("02", "Tinh Nguyen","NA", 1, 29, 2, 2000, "NA", "087929123", "874"));
-
-    if (car_manager->get_customer_by_id("00") == NULL)
-    {
-        cout << "0";
-    }
+    
+    car_manager->print_customers_data();
 
     delete car_manager;
 

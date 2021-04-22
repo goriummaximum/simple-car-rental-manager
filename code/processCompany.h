@@ -30,7 +30,7 @@ class Time
         short get_year();
 };
 
-class ServiceHistory
+class ServiceRecord
 {
     private:
         short id;
@@ -41,7 +41,7 @@ class ServiceHistory
         string tires;
 
     public:
-        ServiceHistory(
+        ServiceRecord(
                 short input_id = -1,
                 short input_hour = 0,
                 short input_day = 0,
@@ -66,7 +66,7 @@ class ServiceHistory
         string get_engine();
         string get_transmission();
         string get_tires();
-        ServiceHistory operator-(const ServiceHistory service2);
+        ServiceRecord operator-(const ServiceRecord service2);
 };
 
 class Vehicle
@@ -80,7 +80,7 @@ class Vehicle
         short n_seats;
         Time manufacture_time;
         float mileage;
-        vector<ServiceHistory> service_history;
+        vector<ServiceRecord> service_history;
 
     public:
         Vehicle(
@@ -118,7 +118,7 @@ class Vehicle
 
         float compute_mileage_between(short idx1, short idx2);
 
-        virtual bool add_service_history(ServiceHistory input_history) = 0;
+        virtual bool add_service_record(ServiceRecord input_record) = 0;
 };
 
 class Sport : public Vehicle {
@@ -138,7 +138,7 @@ class Sport : public Vehicle {
             );
         ~Sport();
 
-        bool add_service_history(ServiceHistory input_history);
+        bool add_service_record(ServiceRecord input_record);
 };
 
 class Motorcycle : public Vehicle {
@@ -164,7 +164,7 @@ class Motorcycle : public Vehicle {
         void set_is_helmet_included(const bool input_is_helmet_included);
         short get_is_helmet_included();
 
-        bool add_service_history(ServiceHistory input_history);
+        bool add_service_record(ServiceRecord input_record);
 };
 
 class SUV : public Vehicle {
@@ -191,7 +191,7 @@ class SUV : public Vehicle {
         void set_is_bag_included(const short input_is_bag_included);
         short get_is_bag_included();
 
-        bool add_service_history(ServiceHistory input_history);
+        bool add_service_record(ServiceRecord input_record);
 };
 
 class CarFleet
@@ -390,7 +390,7 @@ class CarRentalMgmt : public BookAndRent
         //CONTRACT
         RentalContract *get_contract_by_id(string id);
 
-        bool add_service_fleet(string vehicle_id, ServiceHistory input_service);
+        bool add_service_fleet(string vehicle_id, ServiceRecord input_service);
 
         void book_a_vehicle(
                     string vehicle_id, 

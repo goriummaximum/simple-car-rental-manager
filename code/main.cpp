@@ -22,6 +22,7 @@ int main()
 
     cout << car_manager->get_contract_by_id("1")->get_vehicle_id() << endl;
     cout << car_manager->get_contract_by_id("1")->get_customer_name() << endl;
+    cout << car_manager->get_contract_by_id("1")->get_vehicle_model() << endl;
 
     delete car_manager;
 

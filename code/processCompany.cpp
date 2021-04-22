@@ -47,7 +47,7 @@ short Time::get_year()
 
 
 
-ServiceHistory::ServiceHistory(
+ServiceRecord::ServiceRecord(
                 short input_id,
                 short input_hour,
                 short input_day,
@@ -69,60 +69,60 @@ ServiceHistory::ServiceHistory(
             service_time.set_year(input_year);
         }
 
-void ServiceHistory::set_id(short input_id)
+void ServiceRecord::set_id(short input_id)
 {
     id = input_id;
 }
-void ServiceHistory::set_service_time(Time input_service_time)
+void ServiceRecord::set_service_time(Time input_service_time)
 {
     service_time = input_service_time;
 }
-void ServiceHistory::set_mileage(float input_mileage)
+void ServiceRecord::set_mileage(float input_mileage)
 {
     mileage = input_mileage;
 }
-void ServiceHistory::set_engine(string input_engine)
+void ServiceRecord::set_engine(string input_engine)
 {
     engine = input_engine;
 }
-void ServiceHistory::set_transmission(string input_transmission)
+void ServiceRecord::set_transmission(string input_transmission)
 {
     transmission = input_transmission;
 }
-void ServiceHistory::set_tires(string input_tires)
+void ServiceRecord::set_tires(string input_tires)
 {
     tires = input_tires;
 }
 
-short ServiceHistory::get_id()
+short ServiceRecord::get_id()
 {
     return id;
 }
-Time ServiceHistory::get_service_time()
+Time ServiceRecord::get_service_time()
 {
     return service_time;
 }
-float ServiceHistory::get_mileage()
+float ServiceRecord::get_mileage()
 {
     return mileage;
 }
-string ServiceHistory::get_engine()
+string ServiceRecord::get_engine()
 {
     return engine;
 }
-string ServiceHistory::get_transmission()
+string ServiceRecord::get_transmission()
 {
     return transmission;
 }
-string ServiceHistory::get_tires()
+string ServiceRecord::get_tires()
 {
     return tires;
 }
 
 
-ServiceHistory ServiceHistory::operator-(const ServiceHistory service2)
+ServiceRecord ServiceRecord::operator-(const ServiceRecord service2)
 {
-    ServiceHistory result;
+    ServiceRecord result;
     result.set_mileage(abs(service2.mileage - mileage));
     return result;
 }
@@ -232,9 +232,9 @@ float Vehicle::compute_mileage_between(short idx1, short idx2)
         return -1;
     }
 
-    ServiceHistory service1 = service_history.at(idx1);
-    ServiceHistory service2 = service_history.at(idx2);
-    ServiceHistory mileage_between = service2 - service1; //Operator overloading
+    ServiceRecord service1 = service_history.at(idx1);
+    ServiceRecord service2 = service_history.at(idx2);
+    ServiceRecord mileage_between = service2 - service1; //Operator overloading
 
     return mileage_between.get_mileage();
 }
@@ -270,11 +270,11 @@ Sport::~Sport()
 
 }
 
-bool Sport::add_service_history(ServiceHistory input_history)
+bool Sport::add_service_record(ServiceRecord input_record)
 {
-    if ((input_history - service_history.back()).get_mileage() > 1000)
+    if (((input_record - service_history.back()).get_mileage() > 1000) && (status == 0))
     {
-        service_history.push_back(input_history);
+        service_history.push_back(input_record);
         return true;
     }
     return false;
@@ -322,11 +322,11 @@ short Motorcycle::get_is_helmet_included()
     return is_helmet_included;
 }
 
-bool Motorcycle::add_service_history(ServiceHistory input_history)
+bool Motorcycle::add_service_record(ServiceRecord input_record)
 {
-    if ((input_history - service_history.back()).get_mileage() > 2000)
+    if (((input_record - service_history.back()).get_mileage() > 2000) && (status == 0))
     {
-        service_history.push_back(input_history);
+        service_history.push_back(input_record);
         return true;
     }
     return false;
@@ -373,11 +373,11 @@ short SUV::get_is_bag_included()
     return is_bag_included;
 }
 
-bool SUV::add_service_history(ServiceHistory input_history)
+bool SUV::add_service_record(ServiceRecord input_record)
 {
-    if ((input_history - service_history.back()).get_mileage() > 3000)
+    if (((input_record - service_history.back()).get_mileage() > 3000) && (status == 0))
     {
-        service_history.push_back(input_history);
+        service_history.push_back(input_record);
         return true;
     }
     return false;
@@ -817,27 +817,27 @@ void CarRentalMgmt::remove_vehicle_by_id(string id)
     }
 }
 
-bool CarRentalMgmt::add_service_fleet(string vehicle_id, ServiceHistory input_service)
+bool CarRentalMgmt::add_service_fleet(string vehicle_id, ServiceRecord input_service)
 {
     if (vehicle_id[0] == 'S')
     {
         Sport *vehicle = my_fleet->get_Sport_by_id(vehicle_id);
         if (vehicle == NULL) return false;
-        return vehicle->add_service_history(input_service);
+        return vehicle->add_service_record(input_service);
     }
 
     else if (vehicle_id[0] == 'M')
     {
         Motorcycle *vehicle = my_fleet->get_Motorcycle_by_id(vehicle_id);
         if (vehicle == NULL) return false;
-        return vehicle->add_service_history(input_service); 
+        return vehicle->add_service_record(input_service); 
     }
     
     else if (vehicle_id[0] == 'U')
     {
         SUV *vehicle = my_fleet->get_SUV_by_id(vehicle_id);
         if (vehicle == NULL) return false;
-        return vehicle->add_service_history(input_service); 
+        return vehicle->add_service_record(input_service); 
     }
     return false;
 }

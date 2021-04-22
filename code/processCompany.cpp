@@ -239,6 +239,63 @@ float Vehicle::compute_mileage_between(short idx1, short idx2)
     return mileage_between.get_mileage();
 }
 
+json Vehicle::export_json_record(ServiceRecord input_record)
+{
+    json j_out;
+    j_out["id"] = input_record.get_id();
+    j_out["service_time"]["hour"] = input_record.get_service_time().get_hour();
+    j_out["service_time"]["day"] = input_record.get_service_time().get_day();
+    j_out["service_time"]["month"] = input_record.get_service_time().get_month();
+    j_out["service_time"]["year"] = input_record.get_service_time().get_year();
+    j_out["mileage"] = input_record.get_mileage();
+    j_out["engine"] = input_record.get_engine();
+    j_out["transmission"] = input_record.get_transmission();
+    j_out["tires"] = input_record.get_tires();
+
+    return j_out;
+}
+
+json Vehicle::export_json_record_by_id(short id)
+{
+    json j_out;
+    j_out[id] = {};
+    short i;
+    for (i = 0; i < service_history.size(); ++i)
+    {
+        if (service_history.at(i).get_id() == id)
+        {
+            j_out[id] = export_json_record(service_history.at(i));
+            break;
+        }
+    }   
+
+    string file_name = id + "_" + to_string(i) + ".json";
+    ofstream out_file(file_name);
+    out_file << j_out.dump(4) << endl;
+    out_file.close();
+
+    return j_out;
+}
+
+json Vehicle::export_json_record_all()
+{
+    json j_out;
+    j_out[id] = {};
+    for (short i = 0; i < service_history.size(); ++i)
+    {
+        j_out[id].push_back(export_json_record(service_history.at(i)));
+    }
+
+    string file_name = id + "_all.json";
+    ofstream out_file(file_name);
+    out_file << j_out.dump(4) << endl;
+    out_file.close();
+
+    return j_out;
+}
+
+
+
 ServiceRecord *Vehicle::get_service_record_by_id(short id)
 {
     for (short i = 0; i < service_history.size(); ++i)

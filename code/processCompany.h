@@ -82,6 +82,9 @@ class Vehicle
         float mileage;
         vector<ServiceRecord> service_history;
 
+    protected:
+        json export_json_record(ServiceRecord input_record);
+
     public:
         Vehicle(
             string input_id = "NA",
@@ -121,6 +124,9 @@ class Vehicle
         virtual bool add_service_record(ServiceRecord input_record) = 0;
         ServiceRecord *get_service_record_by_id(short id);
         short get_service_history_size();
+
+        json export_json_record_by_id(short id);
+        json export_json_record_all();
 };
 
 class Sport : public Vehicle {

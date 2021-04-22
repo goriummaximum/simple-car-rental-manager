@@ -2,11 +2,14 @@
 #define MAIN_H_
 
 #include <iostream>
+#include <fstream>
 #include <string.h>
 #include <vector>
 #include <math.h>
 #include <iomanip>
+#include "json.hpp"
 
 using namespace std;
+using json = nlohmann::json;
 
 #endif

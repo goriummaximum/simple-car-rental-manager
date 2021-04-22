@@ -26,6 +26,8 @@ int main()
     car_manager->get_Motorcycle_by_id("M1")->add_mileage(4500);
     car_manager->get_Motorcycle_by_id("M1")->add_service_record(ServiceRecord(1, 5, 10, 6, 2021, car_manager->get_Motorcycle_by_id("M1")->get_mileage(), "", "gulu", ""));
 
+    cout << car_manager->get_Motorcycle_by_id("M1")->export_json_record_all().dump(4) << endl;
+
     delete car_manager;
 
     return 0;

@@ -127,6 +127,7 @@ class Vehicle
 
         json export_json_record_by_id(short id);
         json export_json_record_all();
+        void export_json_to_file(string file_name, json j_out);
 };
 
 class Sport : public Vehicle {

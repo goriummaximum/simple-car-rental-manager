@@ -269,10 +269,7 @@ json Vehicle::export_json_record_by_id(short id)
         }
     }   
 
-    string file_name = id + "_" + to_string(i) + ".json";
-    ofstream out_file(file_name);
-    out_file << j_out.dump(4) << endl;
-    out_file.close();
+    export_json_to_file(id + "_" + to_string(i) + ".json", j_out);
 
     return j_out;
 }
@@ -286,15 +283,17 @@ json Vehicle::export_json_record_all()
         j_out[id].push_back(export_json_record(service_history.at(i)));
     }
 
-    string file_name = id + "_all.json";
-    ofstream out_file(file_name);
-    out_file << j_out.dump(4) << endl;
-    out_file.close();
+    export_json_to_file(id + "_all.json", j_out);
 
     return j_out;
 }
 
-
+void Vehicle::export_json_to_file(string file_name, json j_out)
+{
+    ofstream out_file(file_name);
+    out_file << j_out.dump(4) << endl;
+    out_file.close();
+}
 
 ServiceRecord *Vehicle::get_service_record_by_id(short id)
 {

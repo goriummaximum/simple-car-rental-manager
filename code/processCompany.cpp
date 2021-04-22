@@ -239,6 +239,23 @@ float Vehicle::compute_mileage_between(short idx1, short idx2)
     return mileage_between.get_mileage();
 }
 
+ServiceRecord *Vehicle::get_service_record_by_id(short id)
+{
+    for (short i = 0; i < service_history.size(); ++i)
+    {
+        if (service_history.at(i).get_id() == id)
+        {
+            return &service_history.at(i);
+        }
+    }
+
+    return NULL;
+}
+
+short Vehicle::get_service_history_size()
+{
+    return service_history.size();
+}
 
 Sport::Sport(
         string input_id,
@@ -272,7 +289,18 @@ Sport::~Sport()
 
 bool Sport::add_service_record(ServiceRecord input_record)
 {
-    if (((input_record - service_history.back()).get_mileage() > 1000) && (status == 0))
+    float mileage = 0;
+    if (service_history.size() == 0)
+    {
+        mileage = input_record.get_mileage();
+    }
+
+    else
+    {
+        mileage = (input_record - service_history.back()).get_mileage();
+    }
+
+    if ((mileage > 1000) && (status == 0))
     {
         service_history.push_back(input_record);
         return true;
@@ -324,7 +352,18 @@ short Motorcycle::get_is_helmet_included()
 
 bool Motorcycle::add_service_record(ServiceRecord input_record)
 {
-    if (((input_record - service_history.back()).get_mileage() > 2000) && (status == 0))
+    float mileage = 0;
+    if (service_history.size() == 0)
+    {
+        mileage = input_record.get_mileage();
+    }
+
+    else
+    {
+        mileage = (input_record - service_history.back()).get_mileage();
+    }
+
+    if ((mileage > 2000) && (status == 0))
     {
         service_history.push_back(input_record);
         return true;
@@ -375,7 +414,18 @@ short SUV::get_is_bag_included()
 
 bool SUV::add_service_record(ServiceRecord input_record)
 {
-    if (((input_record - service_history.back()).get_mileage() > 3000) && (status == 0))
+    float mileage = 0;
+    if (service_history.size() == 0)
+    {
+        mileage = input_record.get_mileage();
+    }
+
+    else
+    {
+        mileage = (input_record - service_history.back()).get_mileage();
+    }
+
+    if ((mileage > 3000) && (status == 0))
     {
         service_history.push_back(input_record);
         return true;
@@ -815,31 +865,6 @@ void CarRentalMgmt::remove_vehicle_by_id(string id)
     {
         my_fleet->remove_SUV_by_id(id);
     }
-}
-
-bool CarRentalMgmt::add_service_fleet(string vehicle_id, ServiceRecord input_service)
-{
-    if (vehicle_id[0] == 'S')
-    {
-        Sport *vehicle = my_fleet->get_Sport_by_id(vehicle_id);
-        if (vehicle == NULL) return false;
-        return vehicle->add_service_record(input_service);
-    }
-
-    else if (vehicle_id[0] == 'M')
-    {
-        Motorcycle *vehicle = my_fleet->get_Motorcycle_by_id(vehicle_id);
-        if (vehicle == NULL) return false;
-        return vehicle->add_service_record(input_service); 
-    }
-    
-    else if (vehicle_id[0] == 'U')
-    {
-        SUV *vehicle = my_fleet->get_SUV_by_id(vehicle_id);
-        if (vehicle == NULL) return false;
-        return vehicle->add_service_record(input_service); 
-    }
-    return false;
 }
 
 void CarRentalMgmt::print_customers_data()

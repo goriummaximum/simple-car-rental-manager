@@ -119,6 +119,8 @@ class Vehicle
         float compute_mileage_between(short idx1, short idx2);
 
         virtual bool add_service_record(ServiceRecord input_record) = 0;
+        ServiceRecord *get_service_record_by_id(short id);
+        short get_service_history_size();
 };
 
 class Sport : public Vehicle {
@@ -389,8 +391,6 @@ class CarRentalMgmt : public BookAndRent
 
         //CONTRACT
         RentalContract *get_contract_by_id(string id);
-
-        bool add_service_fleet(string vehicle_id, ServiceRecord input_service);
 
         void book_a_vehicle(
                     string vehicle_id, 

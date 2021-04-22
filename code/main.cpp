@@ -20,9 +20,11 @@ int main()
     car_manager->book_a_vehicle("M0", "01", 1, Time(9, 23, 4, 2021), Time(30, 4, 2021));
     car_manager->sign_a_contract("M0");
 
-    cout << car_manager->get_contract_by_id("1")->get_vehicle_id() << endl;
-    cout << car_manager->get_contract_by_id("1")->get_customer_name() << endl;
-    cout << car_manager->get_contract_by_id("1")->get_vehicle_model() << endl;
+    car_manager->get_Motorcycle_by_id("M1")->add_mileage(2000);
+    car_manager->get_Motorcycle_by_id("M1")->add_service_record(ServiceRecord(0, 5, 6, 6, 2021, car_manager->get_Motorcycle_by_id("M1")->get_mileage(), "", "", "replace tires"));
+
+    car_manager->get_Motorcycle_by_id("M1")->add_mileage(4500);
+    car_manager->get_Motorcycle_by_id("M1")->add_service_record(ServiceRecord(1, 5, 10, 6, 2021, car_manager->get_Motorcycle_by_id("M1")->get_mileage(), "", "gulu", ""));
 
     delete car_manager;
 

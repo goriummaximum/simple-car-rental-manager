@@ -1,0 +1,3 @@
+make
+./CarManager
+make clean

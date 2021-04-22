@@ -77,6 +77,10 @@ void ServiceHistory::set_service_time(Time input_service_time)
 {
     service_time = input_service_time;
 }
+void ServiceHistory::set_mileage(float input_mileage)
+{
+    mileage = input_mileage;
+}
 void ServiceHistory::set_engine(string input_engine)
 {
     engine = input_engine;
@@ -113,6 +117,14 @@ string ServiceHistory::get_transmission()
 string ServiceHistory::get_tires()
 {
     return tires;
+}
+
+
+ServiceHistory ServiceHistory::operator-(const ServiceHistory service2)
+{
+    ServiceHistory result;
+    result.set_mileage(abs(service2.mileage - mileage));
+    return result;
 }
 
 
@@ -220,9 +232,12 @@ float Vehicle::compute_mileage_between(short idx1, short idx2)
         return -1;
     }
 
-    return abs(service_history.at(idx1).get_mileage() - service_history.at(idx2).get_mileage());
-}
+    ServiceHistory service1 = service_history.at(idx1);
+    ServiceHistory service2 = service_history.at(idx2);
+    ServiceHistory mileage_between = service2 - service1; //Operator overloading
 
+    return mileage_between.get_mileage();
+}
 
 
 Sport::Sport(
@@ -255,12 +270,14 @@ Sport::~Sport()
 
 }
 
-void Sport::add_service_history(ServiceHistory input_history)
+bool Sport::add_service_history(ServiceHistory input_history)
 {
-    if (mileage > 1000)
+    if ((input_history - service_history.back()).get_mileage() > 1000)
     {
         service_history.push_back(input_history);
+        return true;
     }
+    return false;
 }
 
 Motorcycle::Motorcycle(
@@ -305,13 +322,14 @@ short Motorcycle::get_is_helmet_included()
     return is_helmet_included;
 }
 
-void Motorcycle::add_service_history(ServiceHistory input_history)
+bool Motorcycle::add_service_history(ServiceHistory input_history)
 {
-    if (mileage > 2000)
+    if ((input_history - service_history.back()).get_mileage() > 2000)
     {
         service_history.push_back(input_history);
-        mileage = 0;
+        return true;
     }
+    return false;
 }
 
 SUV::SUV(
@@ -355,13 +373,14 @@ short SUV::get_is_bag_included()
     return is_bag_included;
 }
 
-void SUV::add_service_history(ServiceHistory input_history)
+bool SUV::add_service_history(ServiceHistory input_history)
 {
-    if (mileage > 3000)
+    if ((input_history - service_history.back()).get_mileage() > 3000)
     {
         service_history.push_back(input_history);
-        mileage = 0;
+        return true;
     }
+    return false;
 }
 
 CarFleet::CarFleet()
@@ -705,6 +724,7 @@ short RentalContract::get_payment_method()
 }
 
 
+
 RentalContractsData::RentalContractsData()
 {
     list_contracts = new vector<RentalContract>();
@@ -714,14 +734,28 @@ RentalContractsData::~RentalContractsData()
     delete list_contracts;
 }
 
-short RentalContractsData::get_customer_size()
+short RentalContractsData::get_list_size()
 {
     return list_contracts->size();
 }
 
+
 void RentalContractsData::add_a_contract(RentalContract contract)
 {
     list_contracts->push_back(contract);
+}
+
+RentalContract *RentalContractsData::get_contract_by_id(string id)
+{
+    for (short i = 0; i < list_contracts->size(); i++)
+    {
+        if (list_contracts->at(i).get_id() == id)
+        {
+            return &list_contracts->at(i);
+        }
+    }
+
+    return NULL;
 }
 
 
@@ -783,9 +817,29 @@ void CarRentalMgmt::remove_vehicle_by_id(string id)
     }
 }
 
-void CarRentalMgmt::service_fleet()
+bool CarRentalMgmt::add_service_fleet(string vehicle_id, ServiceHistory input_service)
 {
+    if (vehicle_id[0] == 'S')
+    {
+        Sport *vehicle = my_fleet->get_Sport_by_id(vehicle_id);
+        if (vehicle == NULL) return false;
+        return vehicle->add_service_history(input_service);
+    }
+
+    else if (vehicle_id[0] == 'M')
+    {
+        Motorcycle *vehicle = my_fleet->get_Motorcycle_by_id(vehicle_id);
+        if (vehicle == NULL) return false;
+        return vehicle->add_service_history(input_service); 
+    }
     
+    else if (vehicle_id[0] == 'U')
+    {
+        SUV *vehicle = my_fleet->get_SUV_by_id(vehicle_id);
+        if (vehicle == NULL) return false;
+        return vehicle->add_service_history(input_service); 
+    }
+    return false;
 }
 
 void CarRentalMgmt::print_customers_data()
@@ -825,6 +879,11 @@ void CarRentalMgmt::add_a_customer(Customer customer)
     my_customers_data->add_a_customer(customer);
 }
 
+RentalContract *CarRentalMgmt::get_contract_by_id(string id)
+{
+    return my_rental_contracts_data->get_contract_by_id(id);
+}
+
 void CarRentalMgmt::book_a_vehicle(
                 string vehicle_id, 
                 string customer_id, 
@@ -846,7 +905,6 @@ void CarRentalMgmt::book_a_vehicle(
         Sport *vehicle = my_fleet->get_Sport_by_id(vehicle_id);
         if (vehicle == NULL) return;
         vehicle_name = vehicle->get_brand() + vehicle->get_model();
-        vehicle->set_status(1);
     }
 
     else if (vehicle_id[0] == 'M')
@@ -854,7 +912,6 @@ void CarRentalMgmt::book_a_vehicle(
         Motorcycle *vehicle = my_fleet->get_Motorcycle_by_id(vehicle_id);
         if (vehicle == NULL) return;
         vehicle_name = vehicle->get_brand() + vehicle->get_model();
-        vehicle->set_status(1);
     }
     
     else if (vehicle_id[0] == 'U')
@@ -862,11 +919,10 @@ void CarRentalMgmt::book_a_vehicle(
         SUV *vehicle = my_fleet->get_SUV_by_id(vehicle_id);
         if (vehicle == NULL) return;
         vehicle_name = vehicle->get_brand() + vehicle->get_model();
-        vehicle->set_status(1);
     }
     
     temp_contract = RentalContract(
-            to_string(my_rental_contracts_data->get_customer_size() + 1),
+            to_string(my_rental_contracts_data->get_list_size() + 1),
             1,
             customer_id,
             customer_name,
@@ -882,7 +938,28 @@ void CarRentalMgmt::book_a_vehicle(
             return_time.get_year()
             );
 }
-void CarRentalMgmt::sign_a_contract()
+void CarRentalMgmt::sign_a_contract(string vehicle_id)
 {
+    if (vehicle_id[0] == 'S')
+    {
+        Sport *vehicle = my_fleet->get_Sport_by_id(vehicle_id);
+        if (vehicle == NULL) return;
+        vehicle->set_status(1);
+    }
+
+    else if (vehicle_id[0] == 'M')
+    {
+        Motorcycle *vehicle = my_fleet->get_Motorcycle_by_id(vehicle_id);
+        if (vehicle == NULL) return;
+        vehicle->set_status(1);
+    }
+    
+    else if (vehicle_id[0] == 'U')
+    {
+        SUV *vehicle = my_fleet->get_SUV_by_id(vehicle_id);
+        if (vehicle == NULL) return;
+        vehicle->set_status(1);
+    }
+
     my_rental_contracts_data->add_a_contract(temp_contract);
 }

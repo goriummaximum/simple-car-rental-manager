@@ -55,6 +55,7 @@ class ServiceHistory
 
         void set_id(short input_id);
         void set_service_time(Time input_service_time);
+        void set_mileage(float input_mileage);
         void set_engine(string input_engine);
         void set_transmission(string input_transmission);
         void set_tires(string input_tires);
@@ -65,6 +66,7 @@ class ServiceHistory
         string get_engine();
         string get_transmission();
         string get_tires();
+        ServiceHistory operator-(const ServiceHistory service2);
 };
 
 class Vehicle
@@ -116,7 +118,7 @@ class Vehicle
 
         float compute_mileage_between(short idx1, short idx2);
 
-        virtual void add_service_history(ServiceHistory input_history) = 0;
+        virtual bool add_service_history(ServiceHistory input_history) = 0;
 };
 
 class Sport : public Vehicle {
@@ -136,7 +138,7 @@ class Sport : public Vehicle {
             );
         ~Sport();
 
-        void add_service_history(ServiceHistory input_history);
+        bool add_service_history(ServiceHistory input_history);
 };
 
 class Motorcycle : public Vehicle {
@@ -162,7 +164,7 @@ class Motorcycle : public Vehicle {
         void set_is_helmet_included(const bool input_is_helmet_included);
         short get_is_helmet_included();
 
-        void add_service_history(ServiceHistory input_history);
+        bool add_service_history(ServiceHistory input_history);
 };
 
 class SUV : public Vehicle {
@@ -189,7 +191,7 @@ class SUV : public Vehicle {
         void set_is_bag_included(const short input_is_bag_included);
         short get_is_bag_included();
 
-        void add_service_history(ServiceHistory input_history);
+        bool add_service_history(ServiceHistory input_history);
 };
 
 class CarFleet
@@ -338,8 +340,9 @@ class RentalContractsData
         RentalContractsData();
         ~RentalContractsData();
 
-        short get_customer_size();
+        short get_list_size();
         void add_a_contract(RentalContract contract);
+        RentalContract *get_contract_by_id(string id);
 };
 
 class BookAndRent
@@ -351,7 +354,7 @@ class BookAndRent
                     short payment_method, 
                     Time pickup_time, 
                     Time return_time) = 0;
-        virtual void sign_a_contract() = 0;
+        virtual void sign_a_contract(string vehicle_id) = 0;
 };
 
 class CarRentalMgmt : public BookAndRent
@@ -384,7 +387,11 @@ class CarRentalMgmt : public BookAndRent
         Customer *get_customer_by_id(string id);
         void add_a_customer(Customer customer);
 
-        void service_fleet();
+        //CONTRACT
+        RentalContract *get_contract_by_id(string id);
+
+        bool add_service_fleet(string vehicle_id, ServiceHistory input_service);
+
         void book_a_vehicle(
                     string vehicle_id, 
                     string customer_id,
@@ -392,7 +399,7 @@ class CarRentalMgmt : public BookAndRent
                     Time pickup_time, 
                     Time return_time
                     );
-        void sign_a_contract();
+        void sign_a_contract(string vehicle_id);
 };
 
 #endif

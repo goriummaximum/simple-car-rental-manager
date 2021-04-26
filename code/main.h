@@ -7,6 +7,7 @@
 #include <vector>
 #include <math.h>
 #include <iomanip>
+#include <unistd.h>
 #include "json.hpp"
 
 using namespace std;

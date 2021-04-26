@@ -222,6 +222,10 @@ class CarFleet
         void add_Motorcycle(Motorcycle input_Motorcycle);
         void add_SUV(SUV input_SUV);
 
+        Sport *get_Sport_at(short idx);
+        Motorcycle *get_Motorcycle_at(short idx);
+        SUV *get_SUV_at(short idx);
+
         Sport *get_Sport_by_id(string id);
         Motorcycle *get_Motorcycle_by_id(string id);
         SUV *get_SUV_by_id(string id);
@@ -372,18 +376,26 @@ class CarRentalMgmt : public BookAndRent
         CarFleet *my_fleet;
         CustomersData *my_customers_data;
         RentalContractsData *my_rental_contracts_data;
-    
+   
     protected:
         RentalContract temp_contract;
-    
+   
     public:
         CarRentalMgmt();
         ~CarRentalMgmt();
 
         //VEHICLE
+        short get_Sport_size();
+        short get_Motorcycle_size();
+        short get_SUV_size();
+
         Sport *get_Sport_by_id(string id);
         Motorcycle *get_Motorcycle_by_id(string id);
         SUV *get_SUV_by_id(string id);
+
+        Sport *get_Sport_at(short idx);
+        Motorcycle *get_Motorcycle_at(short idx);
+        SUV *get_SUV_at(short idx);
 
         void add_Sport(Sport input_Sport);
         void add_Motorcycle(Motorcycle input_Motorcycle);

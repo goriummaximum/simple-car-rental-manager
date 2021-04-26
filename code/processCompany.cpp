@@ -1,4 +1,3 @@
-#include "main.h"
 #include "processCompany.h"
 
 Time::Time(
@@ -530,6 +529,36 @@ void CarFleet::add_SUV(SUV input_SUV)
 }
 
 
+Sport *CarFleet::get_Sport_at(short idx)
+{
+    if (idx >= list_sport->size())
+    {
+        return NULL;
+    }
+
+    return &list_sport->at(idx);
+}
+
+Motorcycle *CarFleet::get_Motorcycle_at(short idx)
+{
+    if (idx >= list_motorcycle->size())
+    {
+        return NULL;
+    }
+
+    return &list_motorcycle->at(idx);
+}
+
+SUV *CarFleet::get_SUV_at(short idx)
+{
+    if (idx >= list_SUV->size())
+    {
+        return NULL;
+    }
+
+    return &list_SUV->at(idx);
+}
+
 Sport *CarFleet::get_Sport_by_id(string id)
 {
     for (short i = 0; i < list_sport->size(); ++i)
@@ -879,6 +908,19 @@ CarRentalMgmt::~CarRentalMgmt()
     delete my_rental_contracts_data;
 }
 
+short CarRentalMgmt::get_Sport_size()
+{
+    return my_fleet->get_Sport_size();
+}
+short CarRentalMgmt::get_Motorcycle_size()
+{
+    return my_fleet->get_Motorcycle_size();
+}
+short CarRentalMgmt::get_SUV_size()
+{
+    return my_fleet->get_SUV_size();
+}
+
 Sport *CarRentalMgmt::get_Sport_by_id(string id)
 {
     return my_fleet->get_Sport_by_id(id);
@@ -890,6 +932,21 @@ Motorcycle *CarRentalMgmt::get_Motorcycle_by_id(string id)
 SUV *CarRentalMgmt::get_SUV_by_id(string id)
 {
     return my_fleet->get_SUV_by_id(id);
+}
+
+Sport *CarRentalMgmt::get_Sport_at(short idx)
+{
+    return my_fleet->get_Sport_at(idx);
+}
+
+Motorcycle *CarRentalMgmt::get_Motorcycle_at(short idx)
+{
+    return my_fleet->get_Motorcycle_at(idx);
+}
+
+SUV *CarRentalMgmt::get_SUV_at(short idx)
+{
+    return my_fleet->get_SUV_at(idx);
 }
 
 void CarRentalMgmt::add_Sport(Sport input_Sport)

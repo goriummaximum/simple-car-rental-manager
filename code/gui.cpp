@@ -148,6 +148,11 @@ state GUI::process_PRINT_CAR_FLEET(CarRentalMgmt *car_manager)
     cout << "PRINT CAR FLEET" << endl;
     cout << "----------" << endl << endl;
 
+    cout << "Total vehicle: " << car_manager->get_Motorcycle_size() + car_manager->get_Sport_size() + car_manager->get_SUV_size() << endl;
+    cout << "Total Sport cars: " <<  car_manager->get_Sport_size() << endl;
+    cout << "Total Motorcycle: " <<  car_manager->get_Motorcycle_size() << endl;
+    cout << "Total SUV car: " <<  car_manager->get_SUV_size() << endl << endl;
+
     cout << "----------" << endl;
     cout << "Sport" << endl;
     cout << "----------" << endl;
@@ -264,7 +269,7 @@ state GUI::process_ADD_A_VEHICLE(CarRentalMgmt *car_manager)
     cin >> option;
 
     short id;
-    cout << "ID (int): ";
+    cout << endl << "ID (int): ";
     cin >> id;
 
     string brand;
@@ -274,12 +279,10 @@ state GUI::process_ADD_A_VEHICLE(CarRentalMgmt *car_manager)
 
     string model;
     cout << "Model (string): ";
-    cin.ignore();
     getline(cin, model);
 
     string color;
     cout << "Color (string): ";
-    cin.ignore();
     getline(cin, color);
 
     short seats;
@@ -309,12 +312,21 @@ state GUI::process_ADD_A_VEHICLE(CarRentalMgmt *car_manager)
     switch (option)
     {
         case 1:
+        car_manager->add_Sport(Sport("S" + to_string(id), brand, model, color, seats, hour, day, month, year, false, mileage));
             break;
 
         case 2:
+        bool helmet;
+        cout <<"Include helmet? (bool): ";
+        cin >> helmet;
+        car_manager->add_Motorcycle(Motorcycle("M" + to_string(id), brand, model, color, seats, hour, day, month, year, false, mileage, helmet));
             break;
 
         case 3:
+        bool bag;
+        cout <<"Include bag? (bool): ";
+        cin >> bag;
+        car_manager->add_SUV(SUV("U" + to_string(id), brand, model, color, seats, hour, day, month, year, false, mileage, bag));
             break;
 
         default:

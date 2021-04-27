@@ -40,6 +40,18 @@ void TUI::run(CarRentalMgmt *car_manager)
                 st = process_ACCESS_CUSTOMERS_DATA();
                 break;
 
+            case PRINT_CUSTOMERS:
+                st = process_PRINT_CUSTOMERS(car_manager);
+                break;
+
+            case ADD_A_CUSTOMER:
+                st = process_ADD_A_CUSTOMER(car_manager);
+                break;
+
+            case REMOVE_A_CUSTOMER:
+                st = process_REMOVE_A_CUSTOMER(car_manager);
+                break;
+
             case ACCESS_CONTRACTS_DATA:
                 st = process_ACCESS_CONTRACTS_DATA();
                 break;
@@ -325,7 +337,7 @@ state TUI::process_ACCESS_A_VEHICLE(CarRentalMgmt *car_manager)
             break;
         
         default:
-            st = ACCESS_CAR_FLEET;
+            return ACCESS_CAR_FLEET;
             break;
         }
     }
@@ -927,7 +939,7 @@ state TUI::process_REMOVE_A_VEHICLE(CarRentalMgmt *car_manager)
     cout << "\n1. Return back" << endl;
     cout << "Please choose an option: ";
     int t = 0;
-    cin >> t;;
+    cin >> t;
     return ACCESS_CAR_FLEET;
 }
 
@@ -951,7 +963,178 @@ state TUI::process_SERVICE_FLEET(CarRentalMgmt *car_manager)
 
 state TUI::process_ACCESS_CUSTOMERS_DATA()
 {
-    return MAIN_MENU;
+    system("clear");
+    cout << "----------" << endl;
+    cout << "CUSTOMER DATA" << endl;
+    cout << "----------" << endl << endl;
+
+    cout << "1. Print customers list" << endl;
+    cout << "2. Add a customer" << endl;
+    cout << "3. Remove a customer" << endl;
+    cout << "4. Return back" << endl << endl;
+
+    cout << "Please choose an option: ";
+    int option = 0;
+    cin >> option;
+
+    switch (option)
+    {
+    case 1:
+        return PRINT_CUSTOMERS;
+        break;
+    
+    case 2:
+        return ADD_A_CUSTOMER;
+        break;
+    
+    case 3:
+        return REMOVE_A_CUSTOMER;
+        break;
+
+    case 4:
+        return MAIN_MENU;
+        break;
+    
+    default:
+        return ACCESS_CUSTOMERS_DATA;
+        break;
+    }
+
+    return ACCESS_CUSTOMERS_DATA;
+}
+
+state TUI::process_PRINT_CUSTOMERS(CarRentalMgmt *car_manager)
+{
+    system("clear");
+    cout << "----------" << endl;
+    cout << "PRINT CUSTOMERS LIST" << endl;
+    cout << "----------" << endl << endl;
+
+    cout << "Total customers: " << car_manager->get_customers_size() << endl << endl;
+
+    cout << "No" 
+        << setw(5) << "ID"
+        << setw(20) << "Name"
+        << setw(10) << "Gender"
+        << setw(15) << "DOB"
+        << setw(20) << "Email"
+        << setw(20) << "Driver license ID"
+        << setw(15) << "Phone" << endl;
+
+    for (short i = 0; i < car_manager->get_customers_size(); i++)
+    {
+        Customer *cus = car_manager->get_customer_at(i);
+        cout << i + 1 
+            << setw(5) << cus->get_id()
+            << setw(20) << cus->get_name()
+            << setw(10) << ((cus->get_gender() == true) ? "Male" : "Female")
+            << setw(15) << cus->get_dob().get_day() << "/" << cus->get_dob().get_month() << "/" << cus->get_dob().get_year()
+            << setw(20) << cus->get_email()
+            << setw(20) << cus->get_driver_license_id()
+            << setw(15) << cus->get_phone_number() << endl;
+    }
+
+    cout << "\n1. Return back" << endl;
+    cout << "Please choose an option: ";
+    int t = 0;
+    cin >> t;
+
+    return ACCESS_CUSTOMERS_DATA;
+}
+
+state TUI::process_ADD_A_CUSTOMER(CarRentalMgmt *car_manager)
+{
+    system("clear");
+    cout << "----------" << endl;
+    cout << "ADD A CUSTOMER" << endl;
+    cout << "----------" << endl << endl;
+
+    string id;
+    cout << endl << "ID (string): ";
+    cin.ignore();
+    getline(cin, id);
+
+    string name;
+    cout << "Name (string): ";
+    getline(cin, name);
+
+    bool gender;
+    cout << "Gender (bool) (0 - Female; 1 - male): ";
+    cin >> gender;
+
+    short day;
+    cout << "DOB day (int): ";
+    cin >> day;
+
+    short month;
+    cout << "DOB month (int): ";
+    cin >> month;
+
+    short year;
+    cout << "DOB year (int): ";
+    cin >> year;
+
+    string email;
+    cout << "email (string): ";
+    cin.ignore();
+    getline(cin, email);
+
+    string driver_id;
+    cout << "Driver license ID (string): ";
+    getline(cin, driver_id);
+
+    string phone;
+    cout << "Phone number (string): ";
+    getline(cin, phone);
+
+    if (car_manager->get_customer_by_id(id) != NULL)
+    {
+        cout << "\nThe ID is have already been taken." << endl;
+        cout << "\nAdded unsuccessfully" << endl;
+    }
+
+    else
+    {
+        car_manager->add_a_customer(Customer(id, name, gender, 0, day, month, year, email, driver_id, phone));
+        cout << "\nAdded ccessfully!" << endl;
+    }
+
+    cout << "\n1. Return back" << endl;
+    cout << "Please choose an option: ";
+    int t = 0;
+    cin >> t;
+
+    return ACCESS_CUSTOMERS_DATA;
+}
+
+state TUI::process_REMOVE_A_CUSTOMER(CarRentalMgmt *car_manager)
+{
+    system("clear");
+    cout << "----------" << endl;
+    cout << "REMOVE A CUSTOMER" << endl;
+    cout << "----------" << endl << endl;
+
+    string id;
+    cout << "Please input a customer ID: ";
+    cin.ignore();
+    getline(cin, id);
+
+    if(car_manager->remove_a_customer_by_id(id) == true)
+    {
+        cout << "\nRemoved successfully!" << endl;
+    }
+
+    else
+    {
+        cout << "\nRemoved unsuccessfully" << endl;
+    }
+
+    cout << "\n1. Return back" << endl;
+    cout << "Please choose an option: ";
+    int t = 0;
+    cin >> t;
+
+    return ACCESS_CUSTOMERS_DATA;
 }
 
 state TUI::process_ACCESS_CONTRACTS_DATA()

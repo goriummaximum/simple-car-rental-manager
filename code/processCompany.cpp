@@ -868,6 +868,20 @@ short CustomersData::get_list_size()
     return list_customers->size();
 }
 
+bool CustomersData::remove_a_customer_by_id(string id)
+{
+    for (short i = 0; i < list_customers->size(); i++)
+    {
+        if (list_customers->at(i).get_id() == id)
+        {
+            list_customers->erase(list_customers->begin() + i);
+            return true;
+        }
+    }
+
+    return false;
+}
+
 RentalContract::RentalContract(
             string input_id,
             short input_status,
@@ -1109,32 +1123,9 @@ void CarRentalMgmt::service_fleet()
     }
 }
 
-
-void CarRentalMgmt::print_customers_data()
+Customer *CarRentalMgmt::get_customer_at(short idx)
 {
-    cout << "No" 
-        << setw(5) << "ID"
-        << setw(25) << "Name"
-        << setw(20) << "Gender"
-        << setw(20) << "DOB"
-        << setw(15) << "Phone"
-        << setw(20) << "License"
-        << setw(20) << "Email" << endl;
-
-    for (short i = 0; i < my_customers_data->get_list_size(); i++)
-    {
-        Customer *temp = my_customers_data->get_customer_at(i);
-        cout << i 
-            << setw(5) << temp->get_id() 
-            << setw(25) << temp->get_name() 
-            << setw(10) << temp->get_gender()
-            << setw(20) << temp->get_dob().get_day() << '/'
-            << temp->get_dob().get_month() << '/'
-            << temp->get_dob().get_year()
-            << setw(15) << temp->get_phone_number()
-            << setw(20) << temp->get_driver_license_id()
-            << setw(20) << temp->get_email() << endl;
-    }
+    return my_customers_data->get_customer_at(idx);
 }
 
 Customer *CarRentalMgmt::get_customer_by_id(string id)
@@ -1145,6 +1136,16 @@ Customer *CarRentalMgmt::get_customer_by_id(string id)
 void CarRentalMgmt::add_a_customer(Customer customer)
 {
     my_customers_data->add_a_customer(customer);
+}
+
+short CarRentalMgmt::get_customers_size()
+{
+    return my_customers_data->get_list_size();
+}
+
+bool CarRentalMgmt::remove_a_customer_by_id(string id)
+{
+    return my_customers_data->remove_a_customer_by_id(id);
 }
 
 RentalContract *CarRentalMgmt::get_contract_by_id(string id)

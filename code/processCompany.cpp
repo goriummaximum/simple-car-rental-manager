@@ -118,7 +118,6 @@ string ServiceRecord::get_tires()
     return tires;
 }
 
-
 ServiceRecord ServiceRecord::operator-(const ServiceRecord service2)
 {
     ServiceRecord result;
@@ -294,6 +293,16 @@ void Vehicle::export_json_to_file(string file_name, json j_out)
     out_file.close();
 }
 
+ServiceRecord *Vehicle::get_service_record_at(short idx)
+{
+    if (idx >= service_history.size())
+    {
+        return NULL;
+    }
+
+    return &service_history.at(idx);
+}
+
 ServiceRecord *Vehicle::get_service_record_by_id(short id)
 {
     for (short i = 0; i < service_history.size(); ++i)
@@ -342,24 +351,56 @@ Sport::~Sport()
 
 }
 
-bool Sport::add_service_record(ServiceRecord input_record)
+bool Sport::add_service_record()
 {
     float mileage = 0;
     if (service_history.size() == 0)
     {
-        mileage = input_record.get_mileage();
+        mileage = get_mileage();
     }
 
     else
     {
-        mileage = (input_record - service_history.back()).get_mileage();
+        mileage = abs(get_mileage() - service_history.back().get_mileage());
     }
 
-    if ((mileage > 1000) && (status == 0))
+    if (status == 0)
     {
-        service_history.push_back(input_record);
+        ServiceRecord record;
+        record.set_id(service_history.size());
+
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+        record.set_service_time(Time(5+ltm->tm_hour, ltm->tm_mday, 1 + ltm->tm_mon, 1900 + ltm->tm_year));
+
+        record.set_mileage(mileage);
+
+        if (mileage >= 500 && mileage < 1000)
+        {
+            record.set_engine("minor");
+            record.set_tires("adjustment");
+            record.set_transmission("minor");
+        }
+
+        else if (mileage >= 1000 && mileage < 2000)
+        {
+            record.set_engine("oil change");
+            record.set_tires("replacement");
+            record.set_transmission("fluid change");
+        }
+
+        else if (mileage >= 2000)
+        {
+            record.set_engine("major");
+            record.set_tires("replacement");
+            record.set_transmission("overhaul");
+        }
+
+        service_history.push_back(record);
+
         return true;
     }
+
     return false;
 }
 
@@ -400,29 +441,61 @@ void Motorcycle::set_is_helmet_included(const bool input_is_helmet_included)
     is_helmet_included = input_is_helmet_included;
 }
 
-short Motorcycle::get_is_helmet_included()
+bool Motorcycle::get_is_helmet_included()
 {
     return is_helmet_included;
 }
 
-bool Motorcycle::add_service_record(ServiceRecord input_record)
+bool Motorcycle::add_service_record()
 {
     float mileage = 0;
     if (service_history.size() == 0)
     {
-        mileage = input_record.get_mileage();
+        mileage = get_mileage();
     }
 
     else
     {
-        mileage = (input_record - service_history.back()).get_mileage();
+        mileage = abs(get_mileage() - service_history.back().get_mileage());
     }
 
-    if ((mileage > 2000) && (status == 0))
+    if (status == 0)
     {
-        service_history.push_back(input_record);
+        ServiceRecord record;
+        record.set_id(service_history.size());
+
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+        record.set_service_time(Time(5+ltm->tm_hour, ltm->tm_mday, 1 + ltm->tm_mon, 1900 + ltm->tm_year));
+
+        record.set_mileage(mileage);
+
+        if (mileage >= 1000 && mileage < 3000)
+        {
+            record.set_engine("minor");
+            record.set_tires("adjustment");
+            record.set_transmission("minor");
+        }
+
+        else if (mileage >= 3000 && mileage < 5000)
+        {
+            record.set_engine("oil change");
+            record.set_tires("adjustment");
+            record.set_transmission("fluid change");
+        }
+
+        else if (mileage >= 5000)
+        {
+            record.set_engine("major");
+            record.set_tires("replacement");
+            record.set_transmission("overhaul");
+        }
+
+        service_history.push_back(record);
+
         return true;
     }
+
     return false;
 }
 
@@ -462,29 +535,61 @@ void SUV::set_is_bag_included(const short input_is_bag_included)
     is_bag_included = input_is_bag_included;
 }
 
-short SUV::get_is_bag_included()
+bool SUV::get_is_bag_included()
 {
     return is_bag_included;
 }
 
-bool SUV::add_service_record(ServiceRecord input_record)
+bool SUV::add_service_record()
 {
     float mileage = 0;
     if (service_history.size() == 0)
     {
-        mileage = input_record.get_mileage();
+        mileage = get_mileage();
     }
 
     else
     {
-        mileage = (input_record - service_history.back()).get_mileage();
+        mileage = abs(get_mileage() - service_history.back().get_mileage());
     }
 
-    if ((mileage > 3000) && (status == 0))
+    if (status == 0)
     {
-        service_history.push_back(input_record);
+        ServiceRecord record;
+        record.set_id(service_history.size());
+
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+        record.set_service_time(Time(5+ltm->tm_hour, ltm->tm_mday, 1 + ltm->tm_mon, 1900 + ltm->tm_year));
+
+        record.set_mileage(mileage);
+
+        if (mileage >= 1000 && mileage < 2000)
+        {
+            record.set_engine("minor");
+            record.set_tires("adjustment");
+            record.set_transmission("minor");
+        }
+
+        else if (mileage >= 2000 && mileage < 4000)
+        {
+            record.set_engine("oil change");
+            record.set_tires("adjustment");
+            record.set_transmission("fluid change");
+        }
+
+        else if (mileage >= 4000)
+        {
+            record.set_engine("major");
+            record.set_tires("replacement");
+            record.set_transmission("overhaul");
+        }
+
+        service_history.push_back(record);
+
         return true;
     }
+
     return false;
 }
 
@@ -596,38 +701,42 @@ SUV *CarFleet::get_SUV_by_id(string id)
     return NULL;
 }
 
-void CarFleet::remove_Sport_by_id(string id)
+bool CarFleet::remove_Sport_by_id(string id)
 {
     for (short i = 0; i < list_sport->size(); ++i)
     {
         if (list_sport->at(i).get_id() == id)
         {
             list_sport->erase(list_sport->begin() + i);
-            return;
+            return true;
         }
     }
+
+    return false;
 }
-void CarFleet::remove_Motorcycle_by_id(string id)
+bool CarFleet::remove_Motorcycle_by_id(string id)
 {
     for (short i = 0; i < list_motorcycle->size(); ++i)
     {
         if (list_motorcycle->at(i).get_id() == id)
         {
             list_motorcycle->erase(list_motorcycle->begin() + i);
-            return;
+            return true;
         }
     }
+    return false;
 }
-void CarFleet::remove_SUV_by_id(string id)
+bool CarFleet::remove_SUV_by_id(string id)
 {
     for (short i = 0; i < list_SUV->size(); ++i)
     {
         if (list_SUV->at(i).get_id() == id)
         {
             list_SUV->erase(list_SUV->begin() + i);
-            return;
+            return true;
         }
     }
+    return false;
 }
 
 Customer::Customer(
@@ -962,23 +1071,44 @@ void CarRentalMgmt::add_SUV(SUV input_SUV)
     my_fleet->add_SUV(input_SUV);
 }
 
-void CarRentalMgmt::remove_vehicle_by_id(string id)
+bool CarRentalMgmt::remove_vehicle_by_id(string id)
 {
     if (id.at(0) == 'S')
     {
-        my_fleet->remove_Sport_by_id(id);
+        return my_fleet->remove_Sport_by_id(id);
     }
 
     else if (id.at(0) == 'M')
     {
-        my_fleet->remove_Motorcycle_by_id(id);
+        return my_fleet->remove_Motorcycle_by_id(id);
     }
 
     else if (id.at(0) == 'U')
     {
-        my_fleet->remove_SUV_by_id(id);
+        return my_fleet->remove_SUV_by_id(id);
+    }
+    return false;
+}
+
+
+void CarRentalMgmt::service_fleet()
+{
+    for (short i = 0; i < my_fleet->get_Sport_size(); ++i)
+    {
+        my_fleet->get_Sport_at(i)->add_service_record();
+    }
+
+    for (short i = 0; i < my_fleet->get_Motorcycle_size(); ++i)
+    {
+        my_fleet->get_Motorcycle_at(i)->add_service_record();
+    }
+
+    for (short i = 0; i < my_fleet->get_SUV_size(); ++i)
+    {
+        my_fleet->get_SUV_at(i)->add_service_record();
     }
 }
+
 
 void CarRentalMgmt::print_customers_data()
 {

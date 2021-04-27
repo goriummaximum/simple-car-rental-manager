@@ -1,16 +1,16 @@
 #include "main.h"
 #include "processCompany.h"
-#include "gui.h"
+#include "tui.h"
 
 int main()
 {
     CarRentalMgmt *car_manager = new CarRentalMgmt();
-    GUI *gui = new GUI();
+    TUI *tui = new TUI();
 
-    gui->run(car_manager);
+    tui->run(car_manager);
 
     delete car_manager;
-    delete gui;
+    delete tui;
 
     return 0;
 }

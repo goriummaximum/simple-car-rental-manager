@@ -121,8 +121,9 @@ class Vehicle
 
         float compute_mileage_between(short idx1, short idx2);
 
-        virtual bool add_service_record(ServiceRecord input_record) = 0;
+        virtual bool add_service_record() = 0;
         ServiceRecord *get_service_record_by_id(short id);
+        ServiceRecord *get_service_record_at(short idx);
         short get_service_history_size();
 
         json export_json_record_by_id(short id);
@@ -147,7 +148,7 @@ class Sport : public Vehicle {
             );
         ~Sport();
 
-        bool add_service_record(ServiceRecord input_record);
+        bool add_service_record();
 };
 
 class Motorcycle : public Vehicle {
@@ -171,9 +172,9 @@ class Motorcycle : public Vehicle {
         ~Motorcycle();
 
         void set_is_helmet_included(const bool input_is_helmet_included);
-        short get_is_helmet_included();
+        bool get_is_helmet_included();
 
-        bool add_service_record(ServiceRecord input_record);
+        bool add_service_record();
 };
 
 class SUV : public Vehicle {
@@ -198,9 +199,9 @@ class SUV : public Vehicle {
         ~SUV();
 
         void set_is_bag_included(const short input_is_bag_included);
-        short get_is_bag_included();
+        bool get_is_bag_included();
 
-        bool add_service_record(ServiceRecord input_record);
+        bool add_service_record();
 };
 
 class CarFleet
@@ -230,9 +231,9 @@ class CarFleet
         Motorcycle *get_Motorcycle_by_id(string id);
         SUV *get_SUV_by_id(string id);
 
-        void remove_Sport_by_id(string id);
-        void remove_Motorcycle_by_id(string id);
-        void remove_SUV_by_id(string id);
+        bool remove_Sport_by_id(string id);
+        bool remove_Motorcycle_by_id(string id);
+        bool remove_SUV_by_id(string id);
 };
 
 class Customer
@@ -401,7 +402,9 @@ class CarRentalMgmt : public BookAndRent
         void add_Motorcycle(Motorcycle input_Motorcycle);
         void add_SUV(SUV input_SUV);
 
-        void remove_vehicle_by_id(string id);
+        bool remove_vehicle_by_id(string id);
+
+        void service_fleet();
 
         //CUSTOMER
         void print_customers_data();

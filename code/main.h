@@ -8,6 +8,7 @@
 #include <math.h>
 #include <iomanip>
 #include <unistd.h>
+#include <ctime>
 #include "json.hpp"
 
 using namespace std;

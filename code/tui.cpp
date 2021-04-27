@@ -1096,7 +1096,7 @@ state TUI::process_ADD_A_CUSTOMER(CarRentalMgmt *car_manager)
     else
     {
         car_manager->add_a_customer(Customer(id, name, gender, 0, day, month, year, email, driver_id, phone));
-        cout << "\nAdded ccessfully!" << endl;
+        cout << "\nAdded successfully!" << endl;
     }
 
     cout << "\n1. Return back" << endl;

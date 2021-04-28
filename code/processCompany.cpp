@@ -1171,7 +1171,7 @@ short CarRentalMgmt::get_contracts_size()
     return my_rental_contracts_data->get_list_size();
 }
 
-void CarRentalMgmt::book_a_vehicle(
+bool CarRentalMgmt::book_a_vehicle(
                 string vehicle_id, 
                 string customer_id, 
                 short payment_method, 
@@ -1184,28 +1184,28 @@ void CarRentalMgmt::book_a_vehicle(
     string customer_name;
 
     Customer *cus = my_customers_data->get_customer_by_id(customer_id);
-    if (cus == NULL) return;
+    if (cus == NULL) return false;
     customer_name = cus->get_name();
 
     if (vehicle_id[0] == 'S')
     {
         Sport *vehicle = my_fleet->get_Sport_by_id(vehicle_id);
-        if (vehicle == NULL) return;
+        if (vehicle == NULL) return false;
         vehicle_name = vehicle->get_brand() + vehicle->get_model();
     }
 
     else if (vehicle_id[0] == 'M')
     {
         Motorcycle *vehicle = my_fleet->get_Motorcycle_by_id(vehicle_id);
-        if (vehicle == NULL) return;
+        if (vehicle == NULL) return false;
         vehicle_name = vehicle->get_brand() + vehicle->get_model();
     }
     
     else if (vehicle_id[0] == 'U')
     {
         SUV *vehicle = my_fleet->get_SUV_by_id(vehicle_id);
-        if (vehicle == NULL) return;
-        vehicle_name = vehicle->get_brand() + vehicle->get_model();
+        if (vehicle == NULL) return false;
+        vehicle_name = vehicle->get_brand() + " " + vehicle->get_model();
     }
     
     temp_contract = RentalContract(
@@ -1224,6 +1224,8 @@ void CarRentalMgmt::book_a_vehicle(
             return_time.get_month(),
             return_time.get_year()
             );
+    
+    return true;
 }
 void CarRentalMgmt::sign_a_contract(string vehicle_id)
 {

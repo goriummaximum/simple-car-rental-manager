@@ -364,7 +364,7 @@ class RentalContractsData
 class BookAndRent
 {
     public:
-        virtual void book_a_vehicle(
+        virtual bool book_a_vehicle(
                     string vehicle_id, 
                     string customer_id,
                     short payment_method, 
@@ -380,12 +380,11 @@ class CarRentalMgmt : public BookAndRent
         CustomersData *my_customers_data;
         RentalContractsData *my_rental_contracts_data;
    
-    protected:
-        RentalContract temp_contract;
-   
     public:
         CarRentalMgmt();
         ~CarRentalMgmt();
+        
+        RentalContract temp_contract;
 
         //VEHICLE
         short get_Sport_size();
@@ -420,7 +419,7 @@ class CarRentalMgmt : public BookAndRent
         RentalContract *get_contract_at(short idx);
         short get_contracts_size();
 
-        void book_a_vehicle(
+        bool book_a_vehicle(
                     string vehicle_id, 
                     string customer_id,
                     short payment_method, 

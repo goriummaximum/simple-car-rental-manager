@@ -58,9 +58,10 @@ void TUI::run(CarRentalMgmt *car_manager)
 
             case PRINT_CONTRACTS:
                 st = process_PRINT_CONTRACTS(car_manager);
+                break;
 
             case BOOK:
-                st = process_BOOK();
+                st = process_BOOK(car_manager);
                 break;
 
             case SERVICE_FLEET:
@@ -497,7 +498,7 @@ state TUI::process_ACCESS_A_SPORT(Sport *vehicle)
         break;
     }
 
-    cout << "\n1. Return back" << endl;
+    cout << "\n\n1. Return back" << endl;
     cout << "Please choose an option: ";
     int t = 0;
     cin >> t;
@@ -651,7 +652,7 @@ state TUI::process_ACCESS_A_MOTORCYCLE(Motorcycle *vehicle)
         break;
     }
 
-    cout << "\n1. Return back" << endl;
+    cout << "\n\n1. Return back" << endl;
     cout << "Please choose an option: ";
     int t = 0;
     cin >> t;
@@ -804,7 +805,7 @@ state TUI::process_ACCESS_A_SUV(SUV *vehicle)
         break;
     }
 
-    cout << "\n1. Return back" << endl;
+    cout << "\n\n1. Return back" << endl;
     cout << "Please choose an option: ";
     int t = 0;
     cin >> t;
@@ -1092,7 +1093,7 @@ state TUI::process_ADD_A_CUSTOMER(CarRentalMgmt *car_manager)
     cout << "Phone number (string): ";
     getline(cin, phone);
 
-    if (car_manager->get_customer_by_id(id) != NULL)
+    if (car_manager->get_customer_by_id("C" + id) != NULL)
     {
         cout << "\nThe ID is have already been taken." << endl;
         cout << "\nAdded unsuccessfully" << endl;
@@ -1100,7 +1101,7 @@ state TUI::process_ADD_A_CUSTOMER(CarRentalMgmt *car_manager)
 
     else
     {
-        car_manager->add_a_customer(Customer(id, name, gender, 0, day, month, year, email, driver_id, phone));
+        car_manager->add_a_customer(Customer("C" + id, name, gender, 0, day, month, year, email, driver_id, phone));
         cout << "\nAdded successfully!" << endl;
     }
 
@@ -1198,7 +1199,7 @@ state TUI::process_PRINT_CONTRACTS(CarRentalMgmt *car_manager)
         cout << "Payment method: " << contract->get_payment_method() << endl << endl;
     }
 
-    cout << "\n1. Return back" << endl;
+    cout << "1. Return back" << endl;
     cout << "Please choose an option: ";
     int t = 0;
     cin >> t;
@@ -1206,8 +1207,105 @@ state TUI::process_PRINT_CONTRACTS(CarRentalMgmt *car_manager)
     return ACCESS_CONTRACTS_DATA;
 }
 
-state TUI::process_BOOK()
+state TUI::process_BOOK(CarRentalMgmt *car_manager)
 {
+    system("clear");
+    cout << "----------" << endl;
+    cout << "BOOKING" << endl;
+    cout << "----------" << endl << endl;
+
+    cout << "Vehicle ID: ";
+    string vehicle_id;
+    cin.ignore();
+    getline(cin, vehicle_id);
+
+    cout << "Customer ID: ";
+    string customer_id;
+    getline(cin, customer_id);
+
+    cout << "Payment method: ";
+    short payment;
+    cin >> payment;
+
+    cout << "Pickup hour: ";
+    short p_hour;
+    cin >> p_hour;
+
+    cout << "Pickup day: ";
+    short p_day;
+    cin >> p_day;
+
+    cout << "Pickup month: ";
+    short p_month;
+    cin >> p_month;
+
+    cout << "Pickup year: ";
+    short p_year;
+    cin >> p_year;
+
+    cout << "Return hour: ";
+    short r_hour;
+    cin >> r_hour;
+
+    cout << "Return day: ";
+    short r_day;
+    cin >> r_day;
+
+    cout << "Return month: ";
+    short r_month;
+    cin >> r_month;
+
+    cout << "Return year: ";
+    short r_year;
+    cin >> r_year;
+
+    if (car_manager->book_a_vehicle(vehicle_id, 
+                                customer_id, 
+                                payment, 
+                                Time(p_hour, p_day, p_month, p_year), 
+                                Time(r_hour, r_day, r_month, r_year))
+                                == true)
+    {
+        cout << "---Rental contract---" << endl;
+        cout << "Contract ID: " << car_manager->temp_contract.get_id() << endl;
+        cout << "Customer ID: " << car_manager->temp_contract.get_customer_id() << endl;
+        cout << "Customer name: " << car_manager->temp_contract.get_customer_name() << endl;
+        cout << "Vehicle ID: " << car_manager->temp_contract.get_vehicle_id() << endl;
+        cout << "Vehicle model: " << car_manager->temp_contract.get_vehicle_model() << endl;
+        cout << "Pickup time: " << car_manager->temp_contract.get_pickup_time().get_hour() << "h:" << car_manager->temp_contract.get_pickup_time().get_day()
+                                << "/" << car_manager->temp_contract.get_pickup_time().get_month()
+                                << "/" << car_manager->temp_contract.get_pickup_time().get_year() << endl;
+        cout << "Return time: " << car_manager->temp_contract.get_return_time().get_hour() << "h:" <<car_manager->temp_contract.get_return_time().get_day()
+                                << "/" << car_manager->temp_contract.get_return_time().get_month()
+                                << "/" << car_manager->temp_contract.get_return_time().get_year() << endl;
+        cout << "Payment method: " << car_manager->temp_contract.get_payment_method() << endl << endl;
+
+        cout << "Sign the contract? (bool) (0 - No; 1 - Yes): ";
+        bool is_sign;
+        cin >> is_sign;
+
+        if (is_sign == true)
+        {
+            car_manager->sign_a_contract(vehicle_id);
+            cout << "Rental contract is established successfully!" << endl << endl;
+        }
+
+        else
+        {
+            cout << "Destroy the rental contract" << endl << endl;
+        }
+    }
+
+    else
+    {
+        cout << "Invalid input" << endl << endl;
+    }
+
+    cout << "1. Return back" << endl;
+    cout << "Please choose an option: ";
+    short t = 0;
+    cin >> t;
+
     return MAIN_MENU;
 }
 

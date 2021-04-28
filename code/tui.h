@@ -18,6 +18,7 @@ enum state {
     ADD_A_CUSTOMER,
     REMOVE_A_CUSTOMER,
     ACCESS_CONTRACTS_DATA,
+    PRINT_CONTRACTS,
     BOOK,
     SIGN,
     SERVICE_FLEET,
@@ -42,6 +43,7 @@ class TUI
         state process_ADD_A_CUSTOMER(CarRentalMgmt *car_manager);
         state process_REMOVE_A_CUSTOMER(CarRentalMgmt *car_manager);
         state process_ACCESS_CONTRACTS_DATA();
+        state process_PRINT_CONTRACTS(CarRentalMgmt *car_manager);
         state process_BOOK();
         state process_SIGN();
         state process_SERVICE_FLEET(CarRentalMgmt *car_manager);

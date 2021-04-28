@@ -358,6 +358,7 @@ class RentalContractsData
         short get_list_size();
         void add_a_contract(RentalContract contract);
         RentalContract *get_contract_by_id(string id);
+        RentalContract *get_contract_at(short idx);
 };
 
 class BookAndRent
@@ -416,6 +417,8 @@ class CarRentalMgmt : public BookAndRent
 
         //CONTRACT
         RentalContract *get_contract_by_id(string id);
+        RentalContract *get_contract_at(short idx);
+        short get_contracts_size();
 
         void book_a_vehicle(
                     string vehicle_id, 

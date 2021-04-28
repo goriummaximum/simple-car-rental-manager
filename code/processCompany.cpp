@@ -1016,7 +1016,15 @@ RentalContract *RentalContractsData::get_contract_by_id(string id)
     return NULL;
 }
 
+RentalContract *RentalContractsData::get_contract_at(short idx)
+{
+    if (idx >= list_contracts->size())
+    {
+        return NULL;
+    }
 
+    return &list_contracts->at(idx);
+}
 
 CarRentalMgmt::CarRentalMgmt()
 {
@@ -1151,6 +1159,16 @@ bool CarRentalMgmt::remove_a_customer_by_id(string id)
 RentalContract *CarRentalMgmt::get_contract_by_id(string id)
 {
     return my_rental_contracts_data->get_contract_by_id(id);
+}
+
+RentalContract *CarRentalMgmt::get_contract_at(short idx)
+{
+    return my_rental_contracts_data->get_contract_at(idx);
+}
+
+short CarRentalMgmt::get_contracts_size()
+{
+    return my_rental_contracts_data->get_list_size();
 }
 
 void CarRentalMgmt::book_a_vehicle(

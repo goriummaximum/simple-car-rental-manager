@@ -56,6 +56,9 @@ void TUI::run(CarRentalMgmt *car_manager)
                 st = process_ACCESS_CONTRACTS_DATA();
                 break;
 
+            case PRINT_CONTRACTS:
+                st = process_PRINT_CONTRACTS(car_manager);
+
             case BOOK:
                 st = process_BOOK();
                 break;
@@ -153,6 +156,8 @@ state TUI::process_ACCESS_CAR_FLEET()
             sleep(1);
             return ACCESS_CAR_FLEET;
     }
+
+    return ACCESS_CAR_FLEET;
 }
 
 state TUI::process_PRINT_CAR_FLEET(CarRentalMgmt *car_manager)
@@ -1139,7 +1144,66 @@ state TUI::process_REMOVE_A_CUSTOMER(CarRentalMgmt *car_manager)
 
 state TUI::process_ACCESS_CONTRACTS_DATA()
 {
+    system("clear");
+    cout << "----------" << endl;
+    cout << "CONTRACTS DATA" << endl;
+    cout << "----------" << endl << endl;
+
+    cout << "1. Print rental contracts list" << endl;
+    cout << "2. Return back" << endl << endl;
+
+    cout << "Please choose an option: ";
+    int option = 0;
+    cin >> option;
+
+    switch (option)
+    {
+        case 1:
+            return PRINT_CONTRACTS;
+        case 2:
+            return MAIN_MENU;
+        default:
+            cout << "Wrong input!. Please input again" << endl;
+            sleep(1);
+            return MAIN_MENU;
+    }
+
     return MAIN_MENU;
+}
+
+state TUI::process_PRINT_CONTRACTS(CarRentalMgmt *car_manager)
+{
+    system("clear");
+    cout << "----------" << endl;
+    cout << "PRINT CONTRACTS DATA" << endl;
+    cout << "----------" << endl << endl;
+
+    cout << "Total contracts: " << car_manager->get_contracts_size() << endl << endl;
+
+    for (short i = 0; i < car_manager->get_contracts_size(); i++)
+    {
+        RentalContract *contract = car_manager->get_contract_at(i);
+        cout << "No: " << i + 1 << endl;
+        cout << "ID: " << contract->get_id() << endl;
+        cout << "Customer ID: " << contract->get_customer_id() << endl;
+        cout << "Customer name: " << contract->get_customer_name() << endl;
+        cout << "Vehicle ID: " << contract->get_vehicle_id() << endl;
+        cout << "Vehicle model: " << contract->get_vehicle_model() << endl;
+        cout << "Pickup time: " << contract->get_pickup_time().get_hour() << "h:" << contract->get_pickup_time().get_day()
+                                << "/" << contract->get_pickup_time().get_month()
+                                << "/" << contract->get_pickup_time().get_year() << endl;
+        cout << "Return time: " << contract->get_return_time().get_hour() << "h:" << contract->get_return_time().get_day()
+                                << "/" << contract->get_return_time().get_month()
+                                << "/" << contract->get_return_time().get_year() << endl;
+        cout << "Payment method: " << contract->get_payment_method() << endl << endl;
+    }
+
+    cout << "\n1. Return back" << endl;
+    cout << "Please choose an option: ";
+    int t = 0;
+    cin >> t;
+
+    return ACCESS_CONTRACTS_DATA;
 }
 
 state TUI::process_BOOK()

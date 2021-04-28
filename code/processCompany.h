@@ -99,7 +99,6 @@ class Vehicle
             bool input_status = false,
             float input_mileage = 0
             );
-        ~Vehicle();
 
         void set_id(const string input_id);
         void set_status(const int input_status);
@@ -260,6 +259,26 @@ class Customer
             string input_driver_license_id = "NA",
             string input_phone_number = "NA"
         );
+
+        Customer(
+            string input_id = "NA",
+            string input_name = "NA",
+            bool input_gender = false,
+            short year = 0,
+            string input_email = "NA",
+            string input_driver_license_id = "NA",
+            string input_phone_number = "NA"
+        );
+
+        Customer(
+            string input_id = "NA",
+            string input_name = "NA",
+            bool input_gender = false,
+            short year = 0,
+            string input_driver_license_id = "NA",
+            string input_phone_number = "NA"
+        );
+
         ~Customer();
 
         void set_id(const string input_id);

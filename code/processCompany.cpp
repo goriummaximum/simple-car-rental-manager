@@ -152,11 +152,6 @@ Vehicle::Vehicle(
     manufacture_time.set_year(input_manufacture_year);
 };
 
-Vehicle::~Vehicle()
-{
-
-}
-
 void Vehicle::set_id(const string input_id)
 {
     id = input_id;
@@ -346,10 +341,8 @@ Sport::Sport(
             input_status,
             input_mileage
         }{};
-Sport::~Sport()
-{
 
-}
+
 
 bool Sport::add_service_record()
 {
@@ -525,10 +518,6 @@ SUV::SUV(
             input_status,
             input_mileage
         }, is_bag_included{input_is_bag_included}{};
-SUV::~SUV()
-{
-
-}
 
 void SUV::set_is_bag_included(const short input_is_bag_included)
 {
@@ -676,6 +665,7 @@ Sport *CarFleet::get_Sport_by_id(string id)
 
     return NULL;
 }
+
 Motorcycle *CarFleet::get_Motorcycle_by_id(string id)
 {
     for (short i = 0; i < list_motorcycle->size(); ++i)
@@ -762,9 +752,41 @@ Customer::Customer(
             dob.set_month(month);
             dob.set_year(year);
         }
-Customer::~Customer(){
 
-}
+Customer::Customer(
+            string input_id,
+            string input_name,
+            bool input_gender,
+            short year,
+            string input_email,
+            string input_driver_license_id,
+            string input_phone_number
+        ) : id{input_id},
+            name{input_name},
+            gender{input_gender},
+            email{input_email},
+            driver_license_id{input_driver_license_id},
+            phone_number{input_phone_number}
+        {
+            dob.set_year(year);
+        }
+
+Customer::Customer(
+            string input_id,
+            string input_name,
+            bool input_gender,
+            short year,
+            string input_driver_license_id,
+            string input_phone_number
+        ) : id{input_id},
+            name{input_name},
+            gender{input_gender},
+            email{"NA"},
+            driver_license_id{input_driver_license_id},
+            phone_number{input_phone_number}
+        {
+            dob.set_year(year);
+        }
 
 void Customer::set_id(const string input_id)
 {

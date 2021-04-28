@@ -848,10 +848,6 @@ state TUI::process_ADD_A_VEHICLE(CarRentalMgmt *car_manager)
     cout << "Number of seats (int): ";
     cin >> seats;
 
-    short hour;
-    cout << "Manufacturing hour (int): ";
-    cin >> hour;
-
     short day;
     cout << "Manufacturing day (int): ";
     cin >> day;
@@ -877,7 +873,7 @@ state TUI::process_ADD_A_VEHICLE(CarRentalMgmt *car_manager)
             cout << "\nAdded unsuccessfully" << endl;
             break;
         }
-        car_manager->add_Sport(Sport("S" + id, brand, model, color, seats, hour, day, month, year, false, mileage));
+        car_manager->add_Sport(Sport("S" + id, brand, model, color, seats, 0, day, month, year, false, mileage));
         cout << "\nAdded ccessfully!" << endl;
             break;
 
@@ -891,7 +887,7 @@ state TUI::process_ADD_A_VEHICLE(CarRentalMgmt *car_manager)
             cout << "\nAdded unsuccessfully" << endl;
             break;
         }
-        car_manager->add_Motorcycle(Motorcycle("M" + id, brand, model, color, seats, hour, day, month, year, false, mileage, helmet));
+        car_manager->add_Motorcycle(Motorcycle("M" + id, brand, model, color, seats, 0, day, month, year, false, mileage, helmet));
         cout << "\nAdded ccessfully!" << endl; 
             break;
 
@@ -905,7 +901,7 @@ state TUI::process_ADD_A_VEHICLE(CarRentalMgmt *car_manager)
             cout << "\nAdded unsuccessfully" << endl;
             break;
         }
-        car_manager->add_SUV(SUV("U" + id, brand, model, color, seats, hour, day, month, year, false, mileage, bag));
+        car_manager->add_SUV(SUV("U" + id, brand, model, color, seats, 0, day, month, year, false, mileage, bag));
         cout << "\nAdded ccessfully!" << endl; 
             break;
 

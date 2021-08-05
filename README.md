@@ -10,4 +10,6 @@ How?
 OOP with C++
 
 How to run?
+```
 bash ./run.sh
+```

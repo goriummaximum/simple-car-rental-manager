@@ -397,21 +397,21 @@ state TUI::process_ACCESS_A_SPORT(Sport *vehicle)
 
         cout << "No" 
             << setw(5) << "ID"
-            << setw(20) << "Time"
-            << setw(10) << "Mileage"
+            << setw(10) << "Time"
+            << setw(20) << "Mileage"
             << setw(20) << "Engine"
-            << setw(20) << "Transission"
+            << setw(20) << "Transmission"
             << setw(20) << "Tires" << endl;
 
         for (short i = 0; i < vehicle->get_service_history_size(); i++)
         {
             cout << i 
             << setw(5) << vehicle->get_service_record_at(i)->get_id()
-            << setw(20) << vehicle->get_service_record_at(i)->get_service_time().get_hour()
+            << setw(10) << vehicle->get_service_record_at(i)->get_service_time().get_hour()
                         << "h:" << vehicle->get_service_record_at(i)->get_service_time().get_day()
                         << "/" << vehicle->get_service_record_at(i)->get_service_time().get_month()
                         << "/" << vehicle->get_service_record_at(i)->get_service_time().get_year()
-            << setw(10) << vehicle->get_service_record_at(i)->get_mileage()
+            << setw(20) << vehicle->get_service_record_at(i)->get_mileage()
             << setw(20) << vehicle->get_service_record_at(i)->get_engine()
             << setw(20) << vehicle->get_service_record_at(i)->get_transmission()
             << setw(20) << vehicle->get_service_record_at(i)->get_tires() << endl;
@@ -551,21 +551,21 @@ state TUI::process_ACCESS_A_MOTORCYCLE(Motorcycle *vehicle)
 
         cout << "No" 
             << setw(5) << "ID"
-            << setw(20) << "Time"
-            << setw(10) << "Mileage"
+            << setw(10) << "Time"
+            << setw(20) << "Mileage"
             << setw(20) << "Engine"
-            << setw(20) << "Transission"
+            << setw(20) << "Transmission"
             << setw(20) << "Tires" << endl;
 
         for (short i = 0; i < vehicle->get_service_history_size(); i++)
         {
             cout << i 
             << setw(5) << vehicle->get_service_record_at(i)->get_id()
-            << setw(20) << vehicle->get_service_record_at(i)->get_service_time().get_hour()
+            << setw(10) << vehicle->get_service_record_at(i)->get_service_time().get_hour()
                         << "h:" << vehicle->get_service_record_at(i)->get_service_time().get_day()
                         << "/" << vehicle->get_service_record_at(i)->get_service_time().get_month()
                         << "/" << vehicle->get_service_record_at(i)->get_service_time().get_year()
-            << setw(10) << vehicle->get_service_record_at(i)->get_mileage()
+            << setw(20) << vehicle->get_service_record_at(i)->get_mileage()
             << setw(20) << vehicle->get_service_record_at(i)->get_engine()
             << setw(20) << vehicle->get_service_record_at(i)->get_transmission()
             << setw(20) << vehicle->get_service_record_at(i)->get_tires() << endl;
@@ -704,21 +704,21 @@ state TUI::process_ACCESS_A_SUV(SUV *vehicle)
 
         cout << "No" 
             << setw(5) << "ID"
-            << setw(20) << "Time"
-            << setw(10) << "Mileage"
+            << setw(10) << "Time"
+            << setw(20) << "Mileage"
             << setw(20) << "Engine"
-            << setw(20) << "Transission"
+            << setw(20) << "Transmission"
             << setw(20) << "Tires" << endl;
 
         for (short i = 0; i < vehicle->get_service_history_size(); i++)
         {
             cout << i 
             << setw(5) << vehicle->get_service_record_at(i)->get_id()
-            << setw(20) << vehicle->get_service_record_at(i)->get_service_time().get_hour()
+            << setw(10) << vehicle->get_service_record_at(i)->get_service_time().get_hour()
                         << "h:" << vehicle->get_service_record_at(i)->get_service_time().get_day()
                         << "/" << vehicle->get_service_record_at(i)->get_service_time().get_month()
                         << "/" << vehicle->get_service_record_at(i)->get_service_time().get_year()
-            << setw(10) << vehicle->get_service_record_at(i)->get_mileage()
+            << setw(20) << vehicle->get_service_record_at(i)->get_mileage()
             << setw(20) << vehicle->get_service_record_at(i)->get_engine()
             << setw(20) << vehicle->get_service_record_at(i)->get_transmission()
             << setw(20) << vehicle->get_service_record_at(i)->get_tires() << endl;
@@ -1210,48 +1210,48 @@ state TUI::process_BOOK(CarRentalMgmt *car_manager)
     cout << "BOOKING" << endl;
     cout << "----------" << endl << endl;
 
-    cout << "Vehicle ID: ";
+    cout << "Vehicle ID (string): ";
     string vehicle_id;
     cin.ignore();
     getline(cin, vehicle_id);
 
-    cout << "Customer ID: ";
+    cout << "Customer ID (string): ";
     string customer_id;
     getline(cin, customer_id);
 
-    cout << "Payment method: ";
+    cout << "Payment method (int): ";
     short payment;
     cin >> payment;
 
-    cout << "Pickup hour: ";
+    cout << "Pickup hour (int): ";
     short p_hour;
     cin >> p_hour;
 
-    cout << "Pickup day: ";
+    cout << "Pickup day (int): ";
     short p_day;
     cin >> p_day;
 
-    cout << "Pickup month: ";
+    cout << "Pickup month (int): ";
     short p_month;
     cin >> p_month;
 
-    cout << "Pickup year: ";
+    cout << "Pickup year (int): ";
     short p_year;
     cin >> p_year;
 
-    cout << "Return hour: ";
+    cout << "Return hour (int): ";
     short r_hour;
     cin >> r_hour;
 
-    cout << "Return day: ";
+    cout << "Return day (int): ";
     short r_day;
     cin >> r_day;
 
-    cout << "Return month: ";
+    cout << "Return month (int): ";
     short r_month;
     cin >> r_month;
 
-    cout << "Return year: ";
+    cout << "Return year (int): ";
     short r_year;
     cin >> r_year;
 

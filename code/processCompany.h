@@ -3,6 +3,7 @@
 
 #include "main.h"
 
+//Define the format of time, including hour, day, month, year and manipulation methods.
 class Time
 {
     private:
@@ -28,8 +29,11 @@ class Time
         short get_day();
         short get_month();
         short get_year();
+
+        ~Time();
 };
 
+//Define 1 service record of 1 vehicle, including engine, tranmission, tires service after a certain mileage.
 class ServiceRecord
 {
     private:
@@ -53,6 +57,8 @@ class ServiceRecord
                 string input_tires = "NA"
         );
 
+        ~ServiceRecord();
+
         void set_id(short input_id);
         void set_service_time(Time input_service_time);
         void set_mileage(float input_mileage);
@@ -69,6 +75,8 @@ class ServiceRecord
         ServiceRecord operator-(const ServiceRecord service2);
 };
 
+//Define 1 vehicle, including ID, status, brand, model, color, number of seats, manufacturing time,
+//a list of service records and json serialization.
 class Vehicle
 {
     protected:
@@ -100,6 +108,44 @@ class Vehicle
             float input_mileage = 0
             );
 
+        Vehicle(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
+            );
+
+        Vehicle(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
+            );
+        
+        Vehicle(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
+            );         
+
+        ~Vehicle();
+
         void set_id(const string input_id);
         void set_status(const int input_status);
         void set_brand(const string input_brand);
@@ -130,7 +176,9 @@ class Vehicle
         void export_json_to_file(string file_name, json j_out);
 };
 
-class Sport : public Vehicle {
+//Define 1 Sport car, inheriting from Vehicle class.
+class Sport : public Vehicle
+{
     public:
         Sport(
             string input_id = "NA",
@@ -145,12 +193,51 @@ class Sport : public Vehicle {
             bool input_status = false,
             float input_mileage = 0
             );
+        
+        Sport(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
+            );
+
+        Sport(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
+            );
+
+        Sport(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0
+            );
+
         ~Sport();
 
         bool add_service_record();
 };
 
-class Motorcycle : public Vehicle {
+//Define 1 Motorcycle, inheriting from Vehicle class, have one more attribute defining helmet included option.
+class Motorcycle : public Vehicle
+{
     private:
         bool is_helmet_included;
     public:
@@ -168,6 +255,46 @@ class Motorcycle : public Vehicle {
             float input_mileage = 0,
             bool input_is_helmet_included = false
             );
+
+        Motorcycle(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_helmet_included = false
+            );
+
+        Motorcycle(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_helmet_included = false
+            );
+
+        Motorcycle(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_helmet_included = false
+            );
+
         ~Motorcycle();
 
         void set_is_helmet_included(const bool input_is_helmet_included);
@@ -176,7 +303,9 @@ class Motorcycle : public Vehicle {
         bool add_service_record();
 };
 
-class SUV : public Vehicle {
+//Define 1 SUV, inheriting from Vehicle class, have one more attribute defining bag included option.
+class SUV : public Vehicle
+{
     private:
         bool is_bag_included;
     
@@ -195,6 +324,46 @@ class SUV : public Vehicle {
             float input_mileage = 0,
             bool input_is_bag_included = false
             );
+
+        SUV(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_day = 0, 
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_bag_included = false
+            );
+
+        SUV(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_month = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_bag_included = false
+            );
+
+        SUV(
+            string input_id = "NA",
+            string input_brand = "NA",
+            string input_model = "NA",
+            string input_color = "NA", 
+            short input_n_seats = 0,
+            short input_manufacture_year = 0,  
+            bool input_status = false,
+            float input_mileage = 0,
+            bool input_is_bag_included = false
+            );
+
         ~SUV();
 
         void set_is_bag_included(const short input_is_bag_included);
@@ -203,6 +372,7 @@ class SUV : public Vehicle {
         bool add_service_record();
 };
 
+//Define the car fleet, composit lists of Sport, Motorcycle and SUV and management methods of vehicles.
 class CarFleet
 {
     private:
@@ -235,6 +405,7 @@ class CarFleet
         bool remove_SUV_by_id(string id);
 };
 
+//Define 1 customer, including ID, name, gender, day of birth, email, driver license, phone number.
 class Customer
 {
     private:
@@ -274,6 +445,18 @@ class Customer
             string input_id = "NA",
             string input_name = "NA",
             bool input_gender = false,
+            short hour = 0,
+            short day = 0,
+            short month = 0,
+            short year = 0,
+            string input_driver_license_id = "NA",
+            string input_phone_number = "NA"
+        );
+
+        Customer(
+            string input_id = "NA",
+            string input_name = "NA",
+            bool input_gender = false,
             short year = 0,
             string input_driver_license_id = "NA",
             string input_phone_number = "NA"
@@ -298,6 +481,7 @@ class Customer
         string get_phone_number();
 };
 
+//Define the "database" of customers, including a list of customers and management methods.
 class CustomersData
 {
     private:
@@ -314,6 +498,8 @@ class CustomersData
         bool remove_a_customer_by_id(string id);
 };
 
+//Define 1 rental contract, including information of a vehicle and the customer that book and rent that vehicle,
+//pickup and return time, payment method.
 class RentalContract
 {
     private:
@@ -365,6 +551,7 @@ class RentalContract
         short get_payment_method();
 };
 
+//Define the "database" of rental contracts, including a list of contracts and management methods.
 class RentalContractsData
 {
     private:
@@ -380,6 +567,7 @@ class RentalContractsData
         RentalContract *get_contract_at(short idx);
 };
 
+//Define an interface that consists of 2 actions, book a vehicle and sign a contract.
 class BookAndRent
 {
     public:
@@ -392,6 +580,8 @@ class BookAndRent
         virtual void sign_a_contract(string vehicle_id) = 0;
 };
 
+//Define the main car rental management system that implement the BookAndRent class
+//and manage the CarFleet, CustomersData and RentalContractsData.
 class CarRentalMgmt : public BookAndRent
 {
     private:

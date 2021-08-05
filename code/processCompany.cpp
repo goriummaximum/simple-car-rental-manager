@@ -10,6 +10,10 @@ Time::Time(
             month{input_month},
             year{input_year}{};
 
+Time::~Time(){
+
+};
+
 void Time::set_hour(short input_hour)
 {
     hour = input_hour;
@@ -67,6 +71,11 @@ ServiceRecord::ServiceRecord(
             service_time.set_month(input_month);
             service_time.set_year(input_year);
         }
+
+ServiceRecord::~ServiceRecord()
+{
+
+}
 
 void ServiceRecord::set_id(short input_id)
 {
@@ -151,6 +160,77 @@ Vehicle::Vehicle(
     manufacture_time.set_month(input_manufacture_month);
     manufacture_time.set_year(input_manufacture_year);
 };
+
+Vehicle::Vehicle(
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_day, 
+            short input_manufacture_month,
+            short input_manufacture_year,  
+            bool input_status,
+            float input_mileage
+        ) : id{input_id},
+            brand{input_brand},
+            model{input_model},
+            color{input_color},
+            n_seats{input_n_seats},
+            status{input_status},
+            mileage{input_mileage}
+{
+    manufacture_time.set_day(input_manufacture_day);
+    manufacture_time.set_month(input_manufacture_month);
+    manufacture_time.set_year(input_manufacture_year);
+};
+
+Vehicle::Vehicle(
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_month,
+            short input_manufacture_year,  
+            bool input_status,
+            float input_mileage
+        ) : id{input_id},
+            brand{input_brand},
+            model{input_model},
+            color{input_color},
+            n_seats{input_n_seats},
+            status{input_status},
+            mileage{input_mileage}
+{
+    manufacture_time.set_month(input_manufacture_month);
+    manufacture_time.set_year(input_manufacture_year);
+};
+
+Vehicle::Vehicle(
+            string input_id,
+            string input_brand,
+            string input_model,
+            string input_color, 
+            short input_n_seats,
+            short input_manufacture_year,  
+            bool input_status,
+            float input_mileage
+        ) : id{input_id},
+            brand{input_brand},
+            model{input_model},
+            color{input_color},
+            n_seats{input_n_seats},
+            status{input_status},
+            mileage{input_mileage}
+{
+    manufacture_time.set_year(input_manufacture_year);
+};
+
+Vehicle::~Vehicle()
+{
+
+}
 
 void Vehicle::set_id(const string input_id)
 {
@@ -342,7 +422,76 @@ Sport::Sport(
             input_mileage
         }{};
 
+Sport::Sport(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_day, 
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_day,
+            input_manufacture_month,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }{};
 
+Sport::Sport(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_month,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }{};
+
+Sport::Sport(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }{};
+
+Sport::~Sport()
+{
+
+}
 
 bool Sport::add_service_record()
 {
@@ -424,9 +573,78 @@ Motorcycle::Motorcycle(
             input_mileage
         }, is_helmet_included{input_is_helmet_included}{};
 
+Motorcycle::Motorcycle(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_day, 
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_helmet_included
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_day,
+            input_manufacture_month,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }, is_helmet_included{input_is_helmet_included}{};
+
+Motorcycle::Motorcycle(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_helmet_included
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_month,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }, is_helmet_included{input_is_helmet_included}{};
+
+Motorcycle::Motorcycle(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_helmet_included
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }, is_helmet_included{input_is_helmet_included}{};
+
 Motorcycle::~Motorcycle()
 {
-
+    
 }
 
 void Motorcycle::set_is_helmet_included(const bool input_is_helmet_included)
@@ -518,6 +736,80 @@ SUV::SUV(
             input_status,
             input_mileage
         }, is_bag_included{input_is_bag_included}{};
+
+SUV::SUV(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_day, 
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_bag_included
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_day,
+            input_manufacture_month,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }, is_bag_included{input_is_bag_included}{};
+
+SUV::SUV(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_month,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_bag_included
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_month,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }, is_bag_included{input_is_bag_included}{};
+
+SUV::SUV(
+        string input_id,
+        string input_brand,
+        string input_model,
+        string input_color, 
+        short input_n_seats,
+        short input_manufacture_year,  
+        bool input_status,
+        float input_mileage,
+        bool input_is_bag_included
+    ) : Vehicle{
+            input_id,
+            input_brand,
+            input_model,
+            input_color,
+            input_n_seats,
+            input_manufacture_year,
+            input_status,
+            input_mileage
+        }, is_bag_included{input_is_bag_included}{};
+
+SUV::~SUV()
+{
+
+}
 
 void SUV::set_is_bag_included(const short input_is_bag_included)
 {
@@ -775,6 +1067,29 @@ Customer::Customer(
             string input_id,
             string input_name,
             bool input_gender,
+            short hour,
+            short day,
+            short month,
+            short year,
+            string input_driver_license_id,
+            string input_phone_number
+        ) : id{input_id},
+            name{input_name},
+            gender{input_gender},
+            email{"NA"},
+            driver_license_id{input_driver_license_id},
+            phone_number{input_phone_number}
+        {
+            dob.set_hour(hour);
+            dob.set_day(day);
+            dob.set_month(month);
+            dob.set_year(year);
+        }
+
+Customer::Customer(
+            string input_id,
+            string input_name,
+            bool input_gender,
             short year,
             string input_driver_license_id,
             string input_phone_number
@@ -787,6 +1102,12 @@ Customer::Customer(
         {
             dob.set_year(year);
         }
+
+
+Customer::~Customer()
+{
+
+}
 
 void Customer::set_id(const string input_id)
 {

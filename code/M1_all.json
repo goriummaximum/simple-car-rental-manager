@@ -1,0 +1,30 @@
+{
+    "M1": [
+        {
+            "engine": "minor",
+            "id": 0,
+            "mileage": 2000.0,
+            "service_time": {
+                "day": 5,
+                "hour": 19,
+                "month": 8,
+                "year": 2021
+            },
+            "tires": "adjustment",
+            "transmission": "minor"
+        },
+        {
+            "engine": "minor",
+            "id": 1,
+            "mileage": 1000.0,
+            "service_time": {
+                "day": 5,
+                "hour": 19,
+                "month": 8,
+                "year": 2021
+            },
+            "tires": "adjustment",
+            "transmission": "minor"
+        }
+    ]
+}

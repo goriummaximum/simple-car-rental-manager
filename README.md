@@ -16,7 +16,7 @@ bash ./run.sh
 
 ## File system
 `main.h` contains essential libraries and dependancies  
-`main.cpp` runs the car manager and TUI  
+`main.cpp` drives the car manager and TUI  
 `processCompany.h, processCompany.cpp` declares and implements classes and functions of the rental manager  
 `tui.h, tui.cpp` declares and implements the TUI (Text User Interface) on terminal  
 `json.hpp` json implementation from Nlohmann  
